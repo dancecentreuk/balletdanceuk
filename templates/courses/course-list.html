@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    {% if messages %}
+     {% for message in messages %}
+         <div class="text-center alert alert-{{ message.tags }}">
+             {{ message|safe }}
+         </div>
+     {% endfor %}
+ {% endif %}
+    <div class="hero-wrap js-fullheight" style="background-image: url('{% static 'images/ballet_dance_jobs_bg_6.jpg' %}');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
+          <div class="col-xl-10 ftco-animate mb-5 pb-5" data-scrollax=" properties: { translateY: '70%' }">
+          	<p class="mb-4 mt-5 pt-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">We have <span class="number" data-number="850000">0</span> great job offers you deserve!</p>
+            <h1 class="mb-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Find A <br><span>Ballet Class</span></h1>
+
+						<div class="ftco-search">
+							<div class="row">
+		            <div class="col-md-12 nav-link-wrap">
+			            <div class="nav nav-pills text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+			              <a class="nav-link active mr-md-1" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">Find a Ballet Class</a>
+			            </div>
+			          </div>
+			          <div class="col-md-12 tab-wrap">
+
+			            <div class="tab-content p-4" id="v-pills-tabContent">
+
+			              <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
+                              <form action="{% url 'courses:search-course' %}" class="search-job" method="get" >
+			              		<div class="row">
+			              			<div class="col-md">
+                                        <div class="form-group">
+                                            <div class="form-field">
+                                                <div class="select-wrap">
+                                              <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                              <select name="age_group" id="" class="form-control">
+                                                  <option selected="true" disabled="disabled">Age Group</option>
+                                                  {% for key, value in age_choices %}
+                                                    <option value="{{ key }}">{{ value }}</option>
+                                                  {% endfor %}
+                                              </select>
+                                            </div>
+                                              </div>
+                                          </div>
+			              			</div>
+
+			              			<div class="col-md">
+			              				<div class="form-group">
+			              					<div class="form-field">
+				              					<div class="select-wrap">
+						                      <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+						                      <select name="course_level" id="" class="form-control">
+                                                  <option value="" selected="true">Choose Level</option>
+                                                  {% for level in levels %}
+                                                      <option value="{{ level.id }}">{{ level.title }}</option>
+                                                  {% endfor %}
+						                      </select>
+						                    </div>
+								              </div>
+							              </div>
+			              			</div>
+                                    <div class="col-md">
+                                        <div class="form-group">
+                                            <div class="form-field">
+                                                <div class="select-wrap">
+                                              <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                              <select name="course_location" id="" class="form-control">
+                                                  <option selected="true" disabled="disabled">Location</option>
+                                                  {% for key, value in location_choices %}
+                                                    <option value="{{ key }}">{{ value }}</option>
+                                                  {% endfor %}
+                                              </select>
+                                            </div>
+                                              </div>
+                                          </div>
+			              			</div>
+
+			              			<div class="col-md">
+			              				<div class="form-group">
+			              					<div class="form-field">
+								                <input type="submit" value="Search" class="form-control btn btn-primary">
+								              </div>
+							              </div>
+			              			</div>
+			              		</div>
+			              	</form>
+
+			              </div>
+
+			            </div>
+			          </div>
+			        </div>
+		        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <section class="ftco-section ftco-counter">
+    	<div class="container">
+    		<div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 heading-section text-center ftco-animate">
+            <h2 class="mb-4">Ballet Classes <span>Level</span> </h2>
+          </div>
+        </div>
+        <div class="row">
+            {% for level in levels %}
+        	<div class="col-md-3 ftco-animate">
+        		<ul class="category">
+        			<li><a href="#">{{ level.title }} <span class="number" data-number="{{ level.courses_count }}">0</span></a></li>
+        		</ul>
+        	</div>
+            {% endfor %}
+
+        </div>
+    	</div>
+    </section>
+
+		<section class="ftco-section bg-light">
+			<div class="container">
+				<div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 heading-section text-center ftco-animate">
+            <h2 class="mb-4"><span>Ballet </span>Classes</h2>
+          </div>
+        </div>
+                <div class="row">
+                    {% for course in courses %}
+                        <div class="col-md-12 ftco-animate">
+						<div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
+
+						  <div class="mb-4 mb-md-0 mr-5">
+						   <div class="job-post-item-header d-flex align-items-center">
+						     <h2 class="mr-3 text-black h4">{{ course.title }}</h2>
+						     <div class="badge-wrap">
+                                 {% if course.age_group == 'toddlers' %}
+                                     <span class="bg-warning text-white badge py-2 px-3">Toddlers</span>
+                                 {% elif course.age_group == 'children' %}
+                                     <span class="bg-primary text-white badge py-2 px-3">Children</span>
+                                 {% elif course.age_group == 'teens' %}
+                                     <span class="bg-secondary text-white badge py-2 px-3">Teen</span>
+                                 {% elif course.age_group == 'adults' %}
+                                     <span class="bg-danger text-white badge py-2 px-3">Adults</span>
+                                 {% endif %}
+						     </div>
+						   </div>
+						   <div class="job-post-item-body d-block d-md-flex">
+						     <div class="mr-3"><span class="icon-layers"></span> <a href="#">Google, Inc.</a></div>
+						     <div class="mr-3"><span class="icon-calendar-times-o"></span> {{ course.day}} {{ course.start_time }}</div>
+						     <div class="mr-3"><span class="icon-my_location"></span> <span>{{ course.course_level }} Level</span></div>
+						     <div><span class="icon-my_location"></span> <span>{{ course.location | capfirst }}, UK</span></div>
+						   </div>
+						  </div>
+
+						  <div class="ml-auto d-flex">
+						  	<a href="{% url 'courses:course-detail' course.pk course.slug %}" class="btn btn-primary py-2 mr-1">View</a>
+                              <a href="#" class="btn btn-danger rounded-circle btn-favorite d-flex align-items-center">
+                                  <span class="icon-heart"></span>
+                              </a>
+                          </div>
+
+						</div>
+          </div> <!-- end -->
+                    {% endfor %}
+                </div>
+                <div class="row mt-5">
+                    {% if is_paginated %}
+          <div class="col text-center">
+            <div class="block-27">
+              <ul>
+                  {% if page_obj.has_previous %}
+                      <li><a href="?page={{ page_obj.previous_page_number }}">&lt;</a></li>
+                  {% else %}
+                      <li class="disabled"><span>&lt;</span></li>
+                  {% endif %}
+              {% for i in paginator.page_range %}
+              {% if page_obj.number == i %}
+              <li class="active"><span>{{ i }}</span></li>
+              {% else %}
+                <li><a href="?page={{ i }}">{{ i }}</a></li>
+              {% endif %}
+              {% endfor %}
+              {% if page_obj.has_next %}
+                      <li><a href="?page={{ page_obj.next_page_number }}">&gt;</a></li>
+                  {% else %}
+                      <li class="disabled"><span>&gt;</span></li>
+                  {% endif %}
+
+              </ul>
+            </div>
+          </div>
+                {% endif %}
+        </div>
+			</div>
+		</section>
+
+
+
+
+{% endblock %}

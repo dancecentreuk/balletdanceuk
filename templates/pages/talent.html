@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    {% if messages %}
+     {% for message in messages %}
+         <div class="text-center alert alert-{{ message.tags }}">
+             {{ message|safe }}
+         </div>
+     {% endfor %}
+ {% endif %}
+    <div class="hero-wrap js-fullheight" style="background-image: url('{% static 'images/ballet_bg_4.jpg' %}');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
+          <div class="col-xl-10 ftco-animate mb-5 pb-5" data-scrollax=" properties: { translateY: '70%' }">
+          	<p class="mb-4 mt-5 pt-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">We have <span class="number" data-number="850000">0</span> great job offers you deserve!</p>
+            <h1 class="mb-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Search <br><span>Dance Talent</span></h1>
+
+						<div class="ftco-search">
+							<div class="row">
+		            <div class="col-md-12 nav-link-wrap">
+			            <div class="nav nav-pills text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+			              <a class="nav-link active mr-md-1" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">Find a Job</a>
+
+			              <a class="nav-link" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="false">Find a Candidate</a>
+
+			            </div>
+			          </div>
+			          <div class="col-md-12 tab-wrap">
+
+			            <div class="tab-content p-4" id="v-pills-tabContent">
+
+			              <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
+                              <form action="{% url 'pages:search-talent' %}" class="search-job" method="get" >
+			              		<div class="row">
+			              			<div class="col-md">
+			              				<div class="form-group">
+				              				<div class="form-field">
+				              					<div class="icon"><span class="icon-briefcase"></span></div>
+								                <input type="text" class="form-control" name="keyword" placeholder="Search Title">
+								              </div>
+							              </div>
+			              			</div>
+
+			              			<div class="col-md">
+                                        <div class="form-group">
+                                            <div class="form-field">
+                                                <div class="select-wrap">
+                                              <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                              <select name="gender" id="" class="form-control">
+                                                  <option selected="true" disabled="disabled">Gender</option>
+                                                  {% for key, value in gender_choices %}
+                                                    <option value="{{ key }}">{{ value }}</option>
+                                                  {% endfor %}
+                                              </select>
+                                            </div>
+                                              </div>
+                                          </div>
+			              			</div>
+                                    <div class="col-md">
+                                        <div class="form-group">
+                                            <div class="form-field">
+                                                <div class="select-wrap">
+                                              <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                              <select name="talent_location" id="" class="form-control">
+                                                  <option selected="true" disabled="disabled">Location</option>
+                                                  {% for key, value in location_choices %}
+                                                    <option value="{{ key }}">{{ value }}</option>
+                                                  {% endfor %}
+                                              </select>
+                                            </div>
+                                              </div>
+                                          </div>
+			              			</div>
+			              			<div class="col-md">
+			              				<div class="form-group">
+			              					<div class="form-field">
+								                <input type="submit" value="Search" class="form-control btn btn-primary">
+								              </div>
+							              </div>
+			              			</div>
+			              		</div>
+			              	</form>
+
+			              </div>
+
+			              <div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-performance-tab">
+			              	<form action="#" class="search-job">
+			              		<div class="row">
+			              			<div class="col-md">
+			              				<div class="form-group">
+				              				<div class="form-field">
+				              					<div class="icon"><span class="icon-user"></span></div>
+								                <input type="text" class="form-control" placeholder="eg. Adam Scott">
+								              </div>
+							              </div>
+			              			</div>
+			              			<div class="col-md">
+			              				<div class="form-group">
+			              					<div class="form-field">
+				              					<div class="select-wrap">
+						                      <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+						                      <select name="" id="" class="form-control">
+						                      	<option value="">Category</option>
+						                      	<option value="">Full Time</option>
+						                        <option value="">Part Time</option>
+						                        <option value="">Freelance</option>
+						                        <option value="">Internship</option>
+						                        <option value="">Temporary</option>
+						                      </select>
+						                    </div>
+								              </div>
+							              </div>
+			              			</div>
+			              			<div class="col-md">
+			              				<div class="form-group">
+			              					<div class="form-field">
+				              					<div class="icon"><span class="icon-map-marker"></span></div>
+								                <input type="text" class="form-control" placeholder="Location">
+								              </div>
+							              </div>
+			              			</div>
+			              			<div class="col-md">
+			              				<div class="form-group">
+			              					<div class="form-field">
+								                <input type="submit" value="Search" class="form-control btn btn-primary">
+								              </div>
+							              </div>
+			              			</div>
+			              		</div>
+			              	</form>
+			              </div>
+			            </div>
+			          </div>
+			        </div>
+		        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <section class="ftco-section ftco-counter">
+    <div class="container">
+    <div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 heading-section text-center ftco-animate">
+            <h2 class="mb-4"><span>Dance </span>Talent</h2>
+          </div>
+        </div>
+    <div class="cards-poop">
+        {% for talent in talents %}
+            <div class="card">
+    <img class="card__image" src="{{ talent.dancers_image.url }}" alt="">
+    <div class="card__content">
+      <p class="meta">
+          {{ talent.user.first_name | title }}
+      </p>
+        {% if talent.user.profile.location == None %}
+            <p><br></p>
+        {% else %}
+            <p>{{ talent.user.profile.location | title}}</p>
+        {% endif %}
+
+    </div>
+    <div class="card__info">
+
+          <a href="{% url 'pages:talent-detail' talent.id talent.slug %}" class="btn btn-outline-secondary  btn-sm my-1 font-weight-light">View Profile</a>
+
+    </div>
+  </div>
+        {% endfor %}
+
+</div>
+    </div>
+    </section>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+

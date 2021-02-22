@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="hero-wrap js-fullheight" style="background-image: url('{% static 'images/ballet_bg_2.jpg' %}');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start" data-scrollax-parent="true">
+          <div class="col-md-8 ftco-animate text-center text-md-left mb-5" data-scrollax=" properties: { translateY: '70%' }">
+          	<p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-3"><a href="{% url 'pages:home' %}">Home <i class="ion-ios-arrow-forward"></i></a></span> <span class="mr-3"><a href="blog.html">Listings <i class="ion-ios-arrow-forward"></i></a></span> <span>Single</span></p>
+            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Listing Detail</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="ftco-section ftco-degree-bg">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 ftco-animate">
+            <h2 class="mb-3">{{ listing.title }}</h2>
+              <p>{{ listing.description | linebreaks }} <br>
+              {{ listing.date }} {{ listing.start_time }}-{{ listing.end_time }}</p>
+              <div class="tag-widget post-tag-container mb-5 mt-5">
+              <div class="tagcloud">
+                <a href="#" class="tag-cloud-link">Life</a>
+                <a href="#" class="tag-cloud-link">Sport</a>
+                <a href="#" class="tag-cloud-link">Tech</a>
+                <a href="#" class="tag-cloud-link">Travel</a>
+              </div>
+            </div>
+              <hr>
+
+
+          {{ request.user.id }} <br>
+          {{ listing.author.id }}
+
+              {% if request.user == listing.author %}
+
+              <div class="tag-widget post-tag-container mb-5 mt-5">
+                  <a href="{% url 'jobs:delete-listing' listing.slug listing.pk %}" class="btn btn-danger btn-sm py-1 mr-1">Delete</a>
+                  <a href="{% url 'jobs:update-posting' listing.slug listing.pk %}" class="btn btn-primary btn-sm py-1 mr-1">Update</a>
+              </div>
+
+              {% endif %}
+
+
+           {% if request.user != listing.author %}
+              <a href="{% url 'mail:create-communication' listing.pk %}" class="float-right btn btn-outline-info btn-sm py-1 mr-1">Make Enquiry</a>
+          {% endif %}
+
+
+
+
+
+
+
+          </div> <!-- .col-md-8 -->
+          <div class="col-md-4 sidebar ftco-animate">
+            <div class="sidebar-box">
+              <form action="#" class="search-form">
+                <div class="form-group">
+                  <span class="icon icon-search"></span>
+                  <input type="text" class="form-control" placeholder="Type a keyword and hit enter">
+                </div>
+              </form>
+            </div>
+           <div class="sidebar-box ftco-animate">
+              <div class="categories">
+                <h3 class="text-info">Job Categories</h3>
+                  {% for category in categories %}
+                <li><a href="{% url 'jobs:category-listings' category.slug category.pk %}">{{ category.title }} <span>({{ category.categories_count_listings }})</span></a></li>
+                  {% endfor %}
+              </div>
+            </div>
+
+          <div class="sidebar-box ftco-animate">
+              <div class="categories">
+              <h3 class="text-info">Specific Date Job Categories</h3>
+                  {% for category in categories %}
+                <li><a href="{% url 'jobs:category-postings' category.slug category.pk %}">{{ category.title }} <span>({{ category.categories_count_postings }})</span></a></li>
+                  {% endfor %}
+
+              </div>
+            </div>
+
+
+
+            <div class="sidebar-box ftco-animate">
+              <h3>Tag Cloud</h3>
+              <div class="tagcloud">
+                <a href="#" class="tag-cloud-link">dish</a>
+                <a href="#" class="tag-cloud-link">menu</a>
+                <a href="#" class="tag-cloud-link">food</a>
+                <a href="#" class="tag-cloud-link">sweet</a>
+                <a href="#" class="tag-cloud-link">tasty</a>
+                <a href="#" class="tag-cloud-link">delicious</a>
+                <a href="#" class="tag-cloud-link">desserts</a>
+                <a href="#" class="tag-cloud-link">drinks</a>
+              </div>
+            </div>
+
+
+          </div>
+
+        </div>
+      </div>
+    </section> <!-- .section -->
+{% endblock %}

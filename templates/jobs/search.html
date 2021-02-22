@@ -1,0 +1,285 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    {% if messages %}
+     {% for message in messages %}
+         <div class="text-center alert alert-{{ message.tags }}">
+             {{ message|safe }}
+         </div>
+     {% endfor %}
+ {% endif %}
+    <div class="hero-wrap js-fullheight" style="background-image: url('{% static 'images/ballet_bg_4.jpg' %}');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
+          <div class="col-xl-10 ftco-animate mb-5 pb-5" data-scrollax=" properties: { translateY: '70%' }">
+          	<p class="mb-4 mt-5 pt-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">We have <span class="number" data-number="850000">0</span> great job offers you deserve!</p>
+            <h1 class="mb-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Find Your <br><span>Dance Job</span></h1>
+
+						<div class="ftco-search">
+							<div class="row">
+		            <div class="col-md-12 nav-link-wrap">
+			            <div class="nav nav-pills text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+			              <a class="nav-link active mr-md-1" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">Find a Dance Job</a>
+
+			              <a class="nav-link" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="false">Find a Specific Date Dance Job</a>
+
+			            </div>
+			          </div>
+			          <div class="col-md-12 tab-wrap">
+
+			            <div class="tab-content p-4" id="v-pills-tabContent">
+
+			              <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
+			              	<form action="{% url 'jobs:search-listings' %}" class="search-job" method="get" >
+			              		<div class="row">
+			              			<div class="col-md">
+			              				<div class="form-group">
+				              				<div class="form-field">
+				              					<div class="icon"><span class="icon-briefcase"></span></div>
+								                <input type="text" class="form-control" name="job_title" value="{{ values.job_title }}" placeholder="eg. Garphic. Web Developer">
+								              </div>
+							              </div>
+			              			</div>
+
+			              			<div class="col-md">
+			              				<div class="form-group">
+			              					<div class="form-field">
+				              					<div class="select-wrap">
+						                      <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+						                      <select name="job_type" id="" class="form-control">
+                                              <option value="" selected="true">Choose Category</option>
+                                                  {% for category in categories %}
+						                      	    <option value="{{ category.id }}"
+
+                                                    {% if  values.job_type == category.id %}
+                                                         selected = "{{ values.job_type }}"
+                                                    {% endif %}>{{ category.title }}</option>
+
+                                                  {% endfor %}
+
+						                      </select>
+						                    </div>
+								              </div>
+							              </div>
+			              			</div>
+                                    <div class="col-md">
+                                        <div class="form-group">
+                                            <div class="form-field">
+                                                <div class="select-wrap">
+                                              <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                              <select name="job_location" id="" class="form-control">
+                                                  <option selected="true" disabled="disabled">Location</option>
+                                                  {% for key, value in location_choices %}
+                                                    <option value="{{ key }}"
+                                                    {% if key == values.job_location %}
+                                                        selected
+                                                    {% endif %}>{{ value }}</option>
+                                                  {% endfor %}
+                                              </select>
+                                            </div>
+                                              </div>
+                                          </div>
+			              			</div>
+			              			<div class="col-md">
+			              				<div class="form-group">
+			              					<div class="form-field">
+								                <input type="submit" value="Search" class="form-control btn btn-primary">
+								              </div>
+							              </div>
+			              			</div>
+			              		</div>
+			              	</form>
+			              </div>
+
+			              <div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-performance-tab">
+			              	<form action="{% url 'jobs:search-postings' %}" class="search-job" method="get" >
+			              		<div class="row">
+			              			<div class="col-md">
+			              				<div class="form-group">
+				              				<div class="form-field">
+				              					<div class="icon"><span class="icon-briefcase"></span></div>
+								                <input type="text" class="form-control" name="job_title" value="{{ values.job_title }}" placeholder="eg. Garphic. Web Developer">
+								              </div>
+							              </div>
+			              			</div>
+
+			              			<div class="col-md">
+			              				<div class="form-group">
+			              					<div class="form-field">
+				              					<div class="select-wrap">
+						                      <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+						                      <select name="job_type" id="" class="form-control">
+                                              <option value="" selected="true">Choose Category</option>
+                                                  {% for category in categories %}
+						                      	    <option value="{{ category.id }}"
+
+                                                    {% if  values.job_type == category.id %}
+                                                         selected = "{{ values.job_type }}"
+                                                    {% endif %}>{{ category.title }}</option>
+
+                                                  {% endfor %}
+
+						                      </select>
+						                    </div>
+								              </div>
+							              </div>
+			              			</div>
+                                    <div class="col-md">
+                                        <div class="form-group">
+                                            <div class="form-field">
+                                                <div class="select-wrap">
+                                              <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                              <select name="job_location" id="" class="form-control">
+                                                  <option selected="true" disabled="disabled">Location</option>
+                                                  {% for key, value in location_choices %}
+                                                    <option value="{{ key }}"
+                                                    {% if key == values.job_location %}
+                                                        selected
+                                                    {% endif %}>{{ value }}</option>
+                                                  {% endfor %}
+                                              </select>
+                                            </div>
+                                              </div>
+                                          </div>
+			              			</div>
+			              			<div class="col-md">
+			              				<div class="form-group">
+			              					<div class="form-field">
+								                <input type="submit" value="Search" class="form-control btn btn-primary">
+								              </div>
+							              </div>
+			              			</div>
+			              		</div>
+			              	</form>
+			              </div>
+			            </div>
+			          </div>
+			        </div>
+		        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <section class="ftco-section ftco-counter">
+    	<div class="container">
+    		<div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 heading-section text-center ftco-animate">
+            <h2 class="mb-4"><span>Dance Jobs</span> Categories</h2>
+          </div>
+        </div>
+        <div class="row">
+            {% for category in categories %}
+        	<div class="col-md-3 ftco-animate">
+        		<ul class="category">
+        			<li><a href="">{{ category.title }} <span class="number" data-number="{{ category.categories_count }}">0</span></a></li>
+        		</ul>
+        	</div>
+            {% endfor %}
+
+        </div>
+    	</div>
+    </section>
+
+		<section class="ftco-section bg-light">
+			<div class="container">
+				<div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 heading-section text-center ftco-animate">
+            <h2 class="mb-4"><span>Searched</span> Dance Jobs</h2>
+          </div>
+        </div>
+                <div class="row">
+                    {% for listing in listings %}
+                        <div class="col-md-12 ftco-animate">
+						<div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
+
+						  <div class="mb-4 mb-md-0 mr-5">
+						   <div class="job-post-item-header d-flex align-items-center">
+						     <h2 class="mr-3 text-black h4">{{ listing.title }}</h2>
+{#						     <div class="badge-wrap">#}
+{#                                 {% if course.age_group == 'toddlers' %}#}
+{#                                     <span class="bg-warning text-white badge py-2 px-3">Toddlers</span>#}
+{#                                 {% elif course.age_group == 'children' %}#}
+{#                                     <span class="bg-primary text-white badge py-2 px-3">Children</span>#}
+{#                                 {% elif course.age_group == 'teens' %}#}
+{#                                     <span class="bg-secondary text-white badge py-2 px-3">Teen</span>#}
+{#                                 {% elif course.age_group == 'adults' %}#}
+{#                                     <span class="bg-danger text-white badge py-2 px-3">Adults</span>#}
+{#                                 {% endif %}#}
+{#						     </div>#}
+						   </div>
+						   <div class="job-post-item-body d-block d-md-flex">
+						     <div class="mr-3"><span class="icon-layers"></span> <a href="#">{{ listing.author.first_name }}.</a></div>
+						     <div class="mr-3"><span class="icon-money"></span> <span>£{{ listing.fee}} </span></div>
+						     <div><span class="icon-my_location"></span> <span>{{ listing.location }}, UK</span></div>
+						     <div><span class="icon-my_location"></span> <span>{{ listing.category }}, UK</span></div>
+						   </div>
+						  </div>
+
+						  <div class="ml-auto d-flex">
+						  	<a href="{% url 'jobs:single-listing' listing.slug listing.pk %}" class="btn btn-primary py-2 mr-1">View</a>
+                <a href="#" class="btn btn-danger rounded-circle btn-favorite d-flex align-items-center">
+                	<span class="icon-heart"></span>
+                </a>
+              </div>
+
+						</div>
+          </div> <!-- end -->
+                    {% endfor %}
+                </div>
+                <div class="row mt-5">
+                <div class="block27">
+                    <nav aria-label="Page navigation">
+              {% if listings.has_other_pages %}
+            <ul class="pagination pagination-lg justify-content-center">
+            {% if listings.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?job_title={{ values.job_title }}&job_type={{ values.job_type }}&job_location={{ request.GET.job_location }}&page={{ listings.previous_page_number }}" aria-label="Previous"> <span aria-hidden="true">&laquo;</span> <span class="sr-only">Previous</span> </a>
+                </li>
+            {% else %}
+
+                <li class="page-item disabled">
+                    <a class="page-link"  aria-label="Previous"> <span aria-hidden="true">&laquo;</span> <span class="sr-only">Previous</span> </a>
+                </li>
+
+            {% endif %}
+
+            {% for i in listings.paginator.page_range %}
+                {% if listings.number == i %}
+                    <li class="page-item active">
+                        <a class="page-link" >{{ i }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?job_title={{ values.job_title }}&job_type={{ values.job_type }}&job_location={{ request.GET.job_location }}&page={{ i }}">{{ i }}</a></li>
+
+                {% endif %}
+            {% endfor %}
+            {% if listings.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?job_title={{ values.job_title }}&job_type={{ values.job_type }}&job_location={{ request.GET.job_location }}&page={{ listings.next_page_number }}" aria-label="Previous"> <span aria-hidden="true">&raquo;</span> <span class="sr-only">Previous</span> </a>
+                </li>
+            {% else %}
+
+                <li class="page-item disabled">
+                    <a class="page-link"  aria-label="Next"> <span aria-hidden="true">&raquo;</span> <span class="sr-only">Next</span> </a>
+                </li>
+
+            {% endif %}
+            </ul>
+              {% endif %}
+          </nav>
+                </div>
+        </div>
+
+
+
+
+			</div>
+		</section>
+
+    <
+{% endblock %}

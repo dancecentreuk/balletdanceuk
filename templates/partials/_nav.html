@@ -1,0 +1,49 @@
+	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+	      <a class="navbar-brand" href="{% url 'pages:home' %}">BalletUK</a>
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
+
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav ml-auto">
+	          <li class="nav-item active"><a href="{% url 'pages:home' %}" class="nav-link">Home</a></li>
+	          <li class="nav-item"><a href="{% url 'courses:courses' %}" class="nav-link">Classes</a></li>
+                <div class="btn-group" style="margin-top: 10px">
+                    <button type="button" class="btn btn-white  dropdown-toggle" style="height: 35px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Jobs
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'jobs:jobs' %}">Jobs</a>
+                        <a class="dropdown-item" href="{% url 'jobs:postings' %}">Specific Date Jobs</a>
+                      </div>
+                </div>
+	          <li class="nav-item"><a href="{% url 'pages:talent' %}" class="nav-link">Talent</a></li>
+	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+                {% if  user.is_authenticated %}<!-- Example single danger button -->
+                        <div class="btn-group" style="margin-top: 10px">
+                          <button type="button" class="btn btn-danger dropdown-toggle" style="height: 35px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              {{ user.first_name |title }}
+                          </button>
+                          <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{% url 'mail:inbox' %}">Messages</a>
+                            <a class="dropdown-item" href="{% url 'jobs:create-listing' %}">Add Job</a>
+                            <a class="dropdown-item" href="{% url 'jobs:create-posting' %}">Add Specific Date Job</a>
+                            <a class="dropdown-item" href="{% url 'courses:create-course' %}">Add Class</a>
+                            <a class="dropdown-item" href="#">Find Job</a>
+                            <a class="dropdown-item" href="{% url 'users:profile' user.pk %}">Profile | Update</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'users:logout' %}">Logout</a>
+                          </div>
+                        </div>
+                {% else %}
+                    <li class="nav-item cta mr-md-2"><a href="{% url 'users:login' %}" class="nav-link">Login</a></li>
+                    <li class="nav-item cta cta-colored"><a href="{% url 'users:register' %}" class="nav-link">Register</a></li>
+
+                {% endif %}
+
+	        </ul>
+	      </div>
+	    </div>
+	  </nav>
+

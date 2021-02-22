@@ -1,0 +1,607 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="hero-wrap js-fullheight" style="background-image: url('{% static 'images/ballet_bg_4.jpg' %}');"
+         data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start"
+                 data-scrollax-parent="true">
+                <div class="col-xl-10 ftco-animate mb-5 pb-5" data-scrollax=" properties: { translateY: '70%' }">
+                    <p class="mb-4 mt-5 pt-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">We have
+                        <span class="number" data-number="850000">0</span> great job offers you deserve!</p>
+                    <h1 class="mb-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Start Your
+                        <br><span>Ballet Adventure</span></h1>
+
+                    <div class="ftco-search">
+                        <div class="row">
+                            <div class="col-md-12 nav-link-wrap">
+                                <div class="nav nav-pills text-center" id="v-pills-tab" role="tablist"
+                                     aria-orientation="vertical">
+                                    <a class="nav-link active mr-md-1" id="v-pills-1-tab" data-toggle="pill"
+                                       href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">Find
+                                        a Job</a>
+
+                                    <a class="nav-link" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2"
+                                       role="tab" aria-controls="v-pills-2" aria-selected="false">Find a Candidate</a>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12 tab-wrap">
+
+                                <div class="tab-content p-4" id="v-pills-tabContent">
+
+                                    <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel"
+                                         aria-labelledby="v-pills-nextgen-tab">
+                                        <form action="#" class="search-job">
+                                            <div class="row">
+                                                <div class="col-md">
+                                                    <div class="form-group">
+                                                        <div class="form-field">
+                                                            <div class="icon"><span class="icon-briefcase"></span></div>
+                                                            <input type="text" class="form-control"
+                                                                   placeholder="eg. Garphic. Web Developer">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md">
+                                                    <div class="form-group">
+                                                        <div class="form-field">
+                                                            <div class="select-wrap">
+                                                                <div class="icon"><span
+                                                                        class="ion-ios-arrow-down"></span></div>
+                                                                <select name="" id="" class="form-control">
+                                                                    <option value="">Category</option>
+                                                                    <option value="">Full Time</option>
+                                                                    <option value="">Part Time</option>
+                                                                    <option value="">Freelance</option>
+                                                                    <option value="">Internship</option>
+                                                                    <option value="">Temporary</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md">
+                                                    <div class="form-group">
+                                                        <div class="form-field">
+                                                            <div class="icon"><span class="icon-map-marker"></span>
+                                                            </div>
+                                                            <input type="text" class="form-control"
+                                                                   placeholder="Location">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md">
+                                                    <div class="form-group">
+                                                        <div class="form-field">
+                                                            <input type="submit" value="Search"
+                                                                   class="form-control btn btn-primary">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="v-pills-2" role="tabpanel"
+                                         aria-labelledby="v-pills-performance-tab">
+                                        <form action="#" class="search-job">
+                                            <div class="row">
+                                                <div class="col-md">
+                                                    <div class="form-group">
+                                                        <div class="form-field">
+                                                            <div class="icon"><span class="icon-user"></span></div>
+                                                            <input type="text" class="form-control"
+                                                                   placeholder="eg. Adam Scott">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md">
+                                                    <div class="form-group">
+                                                        <div class="form-field">
+                                                            <div class="select-wrap">
+                                                                <div class="icon"><span
+                                                                        class="ion-ios-arrow-down"></span></div>
+                                                                <select name="" id="" class="form-control">
+                                                                    <option value="">Category</option>
+                                                                    <option value="">Full Time</option>
+                                                                    <option value="">Part Time</option>
+                                                                    <option value="">Freelance</option>
+                                                                    <option value="">Internship</option>
+                                                                    <option value="">Temporary</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md">
+                                                    <div class="form-group">
+                                                        <div class="form-field">
+                                                            <div class="icon"><span class="icon-map-marker"></span>
+                                                            </div>
+                                                            <input type="text" class="form-control"
+                                                                   placeholder="Location">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md">
+                                                    <div class="form-group">
+                                                        <div class="form-field">
+                                                            <input type="submit" value="Search"
+                                                                   class="form-control btn btn-primary">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="ftco-section services-section bg-light">
+        <div class="container">
+            <div class="row d-flex">
+                <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+                    <div class="media block-6 services d-block">
+                        <div class="icon"><span class="flaticon-resume"></span></div>
+                        <div class="media-body">
+                            <h3 class="heading mb-3">Search Millions of Jobs</h3>
+                            <p>A small river named Duden flows by their place and supplies.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+                    <div class="media block-6 services d-block">
+                        <div class="icon"><span class="flaticon-collaboration"></span></div>
+                        <div class="media-body">
+                            <h3 class="heading mb-3">Easy To Manage Jobs</h3>
+                            <p>A small river named Duden flows by their place and supplies.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+                    <div class="media block-6 services d-block">
+                        <div class="icon"><span class="flaticon-promotions"></span></div>
+                        <div class="media-body">
+                            <h3 class="heading mb-3">Top Careers</h3>
+                            <p>A small river named Duden flows by their place and supplies.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+                    <div class="media block-6 services d-block">
+                        <div class="icon"><span class="flaticon-employee"></span></div>
+                        <div class="media-body">
+                            <h3 class="heading mb-3">Search Expert Candidates</h3>
+                            <p>A small river named Duden flows by their place and supplies.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section ftco-counter">
+        <div class="container">
+            <div class="row justify-content-center mb-5 pb-3">
+                <div class="col-md-7 heading-section text-center ftco-animate">
+                    <span class="subheading">Categories work wating for you</span>
+                    <h2 class="mb-4"><span>Current</span> Ballet Classes</h2>
+                </div>
+            </div>
+            <div class="row">
+                {% for level in levels %}
+                    <div class="col-md-3 ftco-animate">
+                        <ul class="category">
+                            <li><a href="#">
+                                {{ level.title }} <span class="number" data-number="{{ level.courses_count }}">0</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section bg-light">
+        <div class="container">
+            <div class="row justify-content-center mb-5 pb-3">
+                <div class="col-md-7 heading-section text-center ftco-animate">
+                    <span class="subheading">Recently Added Jobs</span>
+                    <h2 class="mb-4"><span>Recently Added </span>Classes</h2>
+                </div>
+            </div>
+            <div class="row">
+                {% for course in courses %}
+                    <div class="col-md-12 ftco-animate">
+                        <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
+
+                            <div class="mb-4 mb-md-0 mr-5">
+                                <div class="job-post-item-header d-flex align-items-center">
+                                    <h2 class="mr-3 text-black h4">{{ course.title }}</h2>
+                                    <div class="badge-wrap">
+                                        {% if course.age_group == 'toddlers' %}
+                                            <span class="bg-warning text-white badge py-2 px-3">Toddlers</span>
+                                        {% elif course.age_group == 'children' %}
+                                            <span class="bg-primary text-white badge py-2 px-3">Children</span>
+                                        {% elif course.age_group == 'teens' %}
+                                            <span class="bg-secondary text-white badge py-2 px-3">Teen</span>
+                                        {% elif course.age_group == 'adults' %}
+                                            <span class="bg-danger text-white badge py-2 px-3">Adults</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="job-post-item-body d-block d-md-flex">
+                                    <div class="mr-3"><span class="icon-layers"></span> <a href="#">Google, Inc.</a>
+                                    </div>
+                                    <div class="mr-3"><span class="icon-my_location"></span>
+                                        <span>{{ course.course_level }} Level</span></div>
+                                    <div><span class="icon-my_location"></span> <span>{{ course.location }}, UK</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ml-auto d-flex">
+                                <a href="job-single.html" class="btn btn-primary py-2 mr-1">View</a>
+                                <a href="#"
+                                   class="btn btn-danger rounded-circle btn-favorite d-flex align-items-center">
+                                    <span class="icon-heart"></span>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div> <!-- end -->
+                {% endfor %}
+            </div>
+            <div class="row mt-5">
+                {% if is_paginated %}
+                    <div class="col text-center">
+                        <div class="block-27">
+                            <ul>
+                                {% if page_obj.has_previous %}
+                                    <li><a href="?page={{ page_obj.previous_page_number }}">&lt;</a></li>
+                                {% else %}
+                                    <li class="disabled"><span>&lt;</span></li>
+                                {% endif %}
+                                {% for i in paginator.page_range %}
+                                    {% if page_obj.number == i %}
+                                        <li class="active"><span>{{ i }}</span></li>
+                                    {% else %}
+                                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if page_obj.has_next %}
+                                    <li><a href="?page={{ page_obj.next_page_number }}">&gt;</a></li>
+                                {% else %}
+                                    <li class="disabled"><span>&gt;</span></li>
+                                {% endif %}
+
+                            </ul>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section ftco-counter img" id="section-counter"
+             style="background-image: url({% static 'images/ballet_dance_jobs_bg_4.jpg' %});"
+             data-stellar-background-ratio="0.5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+                            <div class="block-18 text-center">
+                                <div class="text">
+                                    <strong class="number" data-number="{{ classes_count }}">0</strong>
+                                    <span>Classes</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+                            <div class="block-18 text-center">
+                                <div class="text">
+                                    <strong class="number" data-number="{{ listings.count }}">0</strong>
+                                    <span>Dance Jobs</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+                            <div class="block-18 text-center">
+                                <div class="text">
+                                    <strong class="number" data-number="{{ postings.count }}">0</strong>
+                                    <span>Specific Date  Dance Jobs</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+                            <div class="block-18 text-center">
+                                <div class="text">
+                                    <strong class="number" data-number="{{ talents.count }}">0</strong>
+                                    <span>Talent</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="ftco-section bg-light mb-1 pb-4 ">
+        <div class="container">
+            <div class="row justify-content-center mb-1 pb-3">
+                <div class="col-md-7 heading-section text-center ftco-animate mb-0">
+                    <h2 class="mb-4"><span>Latest</span> Dance Jobs</h2>
+                </div>
+            </div>
+            <div class="row">
+                {% for listing in listings|slice:":5" %}
+                    <div class="col-md-12 ftco-animate">
+                        <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
+
+                            <div class="mb-4 mb-md-0 mr-5">
+                                <div class="job-post-item-header d-flex align-items-center">
+                                    <h2 class="mr-3 text-black h4">{{ listing.title }}</h2>
+                                    {#						     <div class="badge-wrap">#}
+                                    {#                                 {% if course.age_group == 'toddlers' %}#}
+                                    {#                                     <span class="bg-warning text-white badge py-2 px-3">Toddlers</span>#}
+                                    {#                                 {% elif course.age_group == 'children' %}#}
+                                    {#                                     <span class="bg-primary text-white badge py-2 px-3">Children</span>#}
+                                    {#                                 {% elif course.age_group == 'teens' %}#}
+                                    {#                                     <span class="bg-secondary text-white badge py-2 px-3">Teen</span>#}
+                                    {#                                 {% elif course.age_group == 'adults' %}#}
+                                    {#                                     <span class="bg-danger text-white badge py-2 px-3">Adults</span>#}
+                                    {#                                 {% endif %}#}
+                                    {#						     </div>#}
+                                </div>
+                                <div class="job-post-item-body d-block d-md-flex">
+                                    <div class="mr-3"><span class="icon-layers"></span> <a
+                                            href="#">{{ listing.author.first_name }}.</a></div>
+                                    <div class="mr-3"><span class="icon-money"></span> <span>£{{ listing.fee }} </span>
+                                    </div>
+                                    <div class="mr-3"><span class="icon-layers"></span>
+                                        <span>{{ listing.category }} </span></div>
+                                    <div><span class="icon-my_location"></span> <span>{{ listing.location }}, UK</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ml-auto d-flex">
+                                <a href="{% url 'jobs:single-listing' listing.slug listing.pk %}"
+                                   class="btn btn-primary py-2 mr-1">View</a>
+                                <a href="#"
+                                   class="btn btn-danger rounded-circle btn-favorite d-flex align-items-center">
+                                    <span class="icon-heart"></span>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div> <!-- end -->
+                {% endfor %}
+            </div>
+
+        </div>
+    </section>
+    <hr>
+
+
+
+
+
+
+
+
+
+
+    <section class="ftco-section bg-light pt-5">
+        <div class="container">
+            <div class="row justify-content-center mb-1 pb-3">
+                <div class="col-md-7 heading-section text-center ftco-animate">
+
+                    <h2 class="mb-1"><span>Latest </span>Specific Date Dance Jobs</h2>
+                    <span class="subheading pb-2">These are  Jobs with Specific Dates</span>
+                </div>
+            </div>
+            <div class="row">
+                {% for listing in postings|slice:":5" %}
+                    <div class="col-md-12 ftco-animate">
+                        <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
+
+                            <div class="mb-4 mb-md-0 mr-5">
+                                <div class="job-post-item-header d-flex align-items-center">
+                                    <h2 class="mr-3 text-black h4">{{ listing.title }}</h2>
+                                    <div class="badge-wrap">
+                                        {% if listing.is_posting == False %}
+                                            <span class="bg-warning text-white badge py-2 px-3">Dated</span>
+                                        {% endif %}
+                                    </div>
+                                    {#						     <div class="badge-wrap">#}
+                                    {#                                 {% if course.age_group == 'toddlers' %}#}
+                                    {#                                     <span class="bg-warning text-white badge py-2 px-3">Toddlers</span>#}
+                                    {#                                 {% elif course.age_group == 'children' %}#}
+                                    {#                                     <span class="bg-primary text-white badge py-2 px-3">Children</span>#}
+                                    {#                                 {% elif course.age_group == 'teens' %}#}
+                                    {#                                     <span class="bg-secondary text-white badge py-2 px-3">Teen</span>#}
+                                    {#                                 {% elif course.age_group == 'adults' %}#}
+                                    {#                                     <span class="bg-danger text-white badge py-2 px-3">Adults</span>#}
+                                    {#                                 {% endif %}#}
+                                    {#						     </div>#}
+                                </div>
+                                <div class="job-post-item-body d-block d-md-flex">
+                                    <div class="mr-3"><span class="icon-layers"></span> <a
+                                            href="#">{{ listing.author.first_name }}.</a></div>
+                                    <div class="mr-3"><span class="icon-money"></span> <span>£{{ listing.fee }} </span>
+                                    </div>
+                                    <div class="mr-3"><span class="icon-date_range"></span>
+                                        <span>{{ listing.date }} </span></div>
+                                    <div><span class="icon-my_location"></span> <span>{{ listing.location }}, UK</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ml-auto d-flex">
+                                <a href="{% url 'jobs:single-posting' listing.slug listing.pk %}"
+                                   class="btn btn-primary py-2 mr-1">View</a>
+                                <a href="#"
+                                   class="btn btn-danger rounded-circle btn-favorite d-flex align-items-center">
+                                    <span class="icon-heart"></span>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div> <!-- end -->
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+    <section class="ftco-section ftco-counter">
+        <div class="container">
+            <div class="row justify-content-center mb-5 pb-3">
+                <div class="col-md-7 heading-section text-center ftco-animate">
+                    <h2 class="mb-4"><span>Latest </span>Dance Talent</h2>
+                </div>
+            </div>
+            <div class="cards-poop">
+                {% for talent in talents|slice:":10" %}
+                    <div class="card">
+                        <img class="card__image" src="{{ talent.dancers_image.url }}" alt="">
+                        <div class="card__content">
+                            <p class="meta">
+                                {{ talent.user.first_name | title }}
+                            </p>
+                            {% if talent.user.profile.location == None %}
+                                <p><br></p>
+                            {% else %}
+                                <p>{{ talent.user.profile.location | title }}</p>
+                            {% endif %}
+
+                        </div>
+                        <div class="card__info">
+
+                            <a href="{% url 'pages:talent-detail' talent.id talent.slug %}"
+                               class="btn btn-outline-secondary  btn-sm my-1 font-weight-light">View Profile</a>
+
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </section>
+
+
+    <section class="ftco-section bg-light">
+        <div class="container">
+            <div class="row justify-content-center mb-5 pb-3">
+                <div class="col-md-7 heading-section text-center ftco-animate">
+                    <span class="subheading">Our Blog</span>
+                    <h2><span>Recent</span> Blog</h2>
+                </div>
+            </div>
+            <div class="row d-flex">
+                <div class="col-md-3 d-flex ftco-animate">
+                    <div class="blog-entry align-self-stretch">
+                        <a href="blog-single.html" class="block-20"
+                           style="background-image: url('{% static 'images/image_1.jpg' %}');">
+                        </a>
+                        <div class="text mt-3">
+                            <div class="meta mb-2">
+                                <div><a href="#">December 2, 2018</a></div>
+                                <div><a href="#">Admin</a></div>
+                                <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+                            </div>
+                            <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the
+                                blind texts</a></h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias architecto enim non iste
+                                maxime optio, ut com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex ftco-animate">
+                    <div class="blog-entry align-self-stretch">
+                        <a href="blog-single.html" class="block-20"
+                           style="background-image: url('{% static 'images/image_2.jpg' %}');">
+                        </a>
+                        <div class="text mt-3">
+                            <div class="meta mb-2">
+                                <div><a href="#">December 2, 2018</a></div>
+                                <div><a href="#">Admin</a></div>
+                                <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+                            </div>
+                            <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the
+                                blind texts</a></h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet nobis natus incidunt
+                                officia assumenda.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex ftco-animate">
+                    <div class="blog-entry align-self-stretch">
+                        <a href="blog-single.html" class="block-20"
+                           style="background-image: url('{% static 'images/image_3.jpg' %}');">
+                        </a>
+                        <div class="text mt-3">
+                            <div class="meta mb-2">
+                                <div><a href="#">December 2, 2018</a></div>
+                                <div><a href="#">Admin</a></div>
+                                <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+                            </div>
+                            <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the
+                                blind texts</a></h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi obcaecati
+                                praesentium,</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex ftco-animate">
+                    <div class="blog-entry align-self-stretch">
+                        <a href="blog-single.html" class="block-20"
+                           style="background-image: url('{% static 'images/image_4.jpg' %}');">
+                        </a>
+                        <div class="text mt-3">
+                            <div class="meta mb-2">
+                                <div><a href="#">December 2, 2018</a></div>
+                                <div><a href="#">Admin</a></div>
+                                <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+                            </div>
+                            <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the
+                                blind texts</a></h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor minima, dolores quis,
+                                dolorum accusamu</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

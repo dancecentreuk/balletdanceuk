@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<main>
+
+
+    <nav class="navbar navbar-expand navbar-light bg-white border-bottom border-dark">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link ml-3 mr-2" href="{% url 'mail:inbox' %}">Inbox <i class="fa fa-inbox text-info">
+                        ({{ inbox_count }}) </i> <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Sent <i class="fas fa-paper-plane"></i></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+
+    <section class="section-mail">
+      <div class="container text-center">
+
+
+
+
+          <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-12 mx-auto">
+                  <div class="card bg-light" style="max-width:30rem;">
+                  {% if conversation.messenger_1 == request.user %}
+                      <img src="{{ conversation.communications_message_2.sender.profile.profile_image.url }}" style="height: 150px; width: 150px " alt="Pray" class="card-img-top mx-auto rounded-circle" />
+                  {% else %}
+                      <img src="{{ conversation.communications_message_1.sender.profile.profile_image.url }}" style="height: 150px; width: 150px " alt="Pray" class="card-img-top mx-auto rounded-circle" />
+                  {% endif %}
+
+
+
+                      <div class="card-body text-center">
+                        <h6 class="card-title">
+                            {% if conversation.messenger_1 == request.user %}
+                                <a href="">{{ conversation.messenger_1.first_name | capfirst}} </a>
+                            {% else %}
+                                <a href=""> {{ conversation.messenger_1.first_name | capfirst}} {{ conversation.messenger_1.last_name | capfirst}}</a>
+                            {% endif %}
+                        </h6>
+                          <a class="btn btn-block btn-sm btn-outline-info" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i>
+                              {% if request.user.username == communication.conversation.messenger_1.username %}
+                                  Reply to {{ communication.conversation.messenger_2.username }}
+                              {% else %}
+                                  Reply to {{ communication.conversation.messenger_1.username }}
+                              {% endif %}
+                          </a>
+
+
+
+
+        </div>
+
+    </div>
+</div>
+
+
+           <div class="col-md-9 col-sm-12">
+        <div id="messageFeed" class="p-3">
+         <div class="row">
+              <div class="col-md-12 mx-auto ">
+                  <div class="card  mb-3 bg-white">
+                      <div class="card-header" style="background-color: white;">
+                          <div class="row">
+                              <div class="col-1">
+                                  <h5 class="grid-title"><i class="text-success fas fa-envelope"></i></h5>
+                              </div>
+                              <div class="col-11">
+                                  <h5 class="text-info">{{ conversation.title }}</h5>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+            {% for m in all_convo %}
+
+                <div class="card mb-3 {% if request.user == m.sender %} ml-auto mb-3 text-light bg-secondary {% endif %}" style="width: 21rem">
+                    <div class="card-header font-weight-bold">
+                        <img src="{{ m.sender.profile.profile_image.url }}" style="height: 25px; width: 25px " alt="Pray" class="rounded-circle" />
+
+                         | {{ m.timestamp }}
+                    </div>
+                    <div class="card-body">
+                        {{ m.content }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+
+
+    </div>
+
+
+      </div>
+
+      </div>
+    </section>
+
+
+
+<!-- END INBOX CONTENT -->
+
+					<!-- BEGIN COMPOSE MESSAGE -->
+					<div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
+						<div class="modal-wrapper">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header bg-blue">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+										<h4 class="modal-title"><i class="fa fa-envelope"></i> Compose New Message</h4>
+									</div>
+									<form action="" method="POST">
+                                        {% csrf_token %}
+										<div class="modal-body">
+											<div class="form-group">
+                                            <label for="recipient">To :</label>
+												<input  name="recipient" type="text" class="form-control" placeholder="{% if request.user == communication.conversation.messenger_1 %}
+                                                        {{ communication.conversation.messenger_2_id }}
+                                                    {% else %}
+                                                        {{ communication.conversation.messenger_1_id }}
+                                                    {% endif %}" value="{% if request.user == communication.conversation.messenger_1 %}
+                                                        {{ communication.conversation.messenger_2_id }}
+                                                    {% else %}
+                                                        {{ communication.conversation.messenger_1_id }}
+                                                    {% endif %}">
+											</div>
+											<div class="form-group">
+                                                <label for="sender">From :</label>
+												<input name="sender" type="text" class="form-control" placeholder="From : {{ request.user }}" value="{{ request.user }}">
+											</div>
+											<div class="form-group">
+                                                <label for="conversation">Conversation :</label>
+												<input name="conversation" type="text" class="form-control" placeholder="conversation {{ communication.conversation }}" value="{{ communication.conversation }}">
+											</div>
+
+											<div class="form-group">
+												<textarea name="content" id="email_message" class="form-control" placeholder="Message" style="height: 120px;"></textarea>
+											</div>
+
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Discard</button>
+											<button type="submit" class="btn btn-primary pull-right"><i class="fa fa-envelope"></i> Send Message</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+{#					<!-- END COMPOSE MESSAGE -->#}
+
+
+
+
+
+</main>
+
+
+
+
+
+{% endblock %}
