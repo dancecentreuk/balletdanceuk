@@ -9,16 +9,17 @@
 	        <ul class="navbar-nav ml-auto">
 	          <li class="nav-item active"><a href="{% url 'pages:home' %}" class="nav-link">Home</a></li>
 	          <li class="nav-item"><a href="{% url 'courses:courses' %}" class="nav-link">Classes</a></li>
-                <div class="btn-group" style="margin-top: 10px">
-                    <button type="button" class="btn btn-white  dropdown-toggle" style="height: 35px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <li class="btn-group" style="margin-top: 10px">
+                    <button type="button" class="btn btn-sadie-outline  dropdown-toggle nav-link-2" style="height: 35px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Jobs
                     </button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{% url 'jobs:jobs' %}">Jobs</a>
                         <a class="dropdown-item" href="{% url 'jobs:postings' %}">Specific Date Jobs</a>
                       </div>
-                </div>
+                </li>
 	          <li class="nav-item"><a href="{% url 'pages:talent' %}" class="nav-link">Talent</a></li>
+	          <li class="nav-item"><a href="{% url 'venues:venues' %}" class="nav-link">Venues</a></li>
 	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
                 {% if  user.is_authenticated %}<!-- Example single danger button -->
                         <div class="btn-group" style="margin-top: 10px">
@@ -30,7 +31,7 @@
                             <a class="dropdown-item" href="{% url 'jobs:create-listing' %}">Add Job</a>
                             <a class="dropdown-item" href="{% url 'jobs:create-posting' %}">Add Specific Date Job</a>
                             <a class="dropdown-item" href="{% url 'courses:create-course' %}">Add Class</a>
-                            <a class="dropdown-item" href="#">Find Job</a>
+                            <a class="dropdown-item" href="{% url 'venues:add-venue' %}">Add Venue</a>
                             <a class="dropdown-item" href="{% url 'users:profile' user.pk %}">Profile | Update</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{% url 'users:logout' %}">Logout</a>

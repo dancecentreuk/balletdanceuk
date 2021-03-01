@@ -266,6 +266,33 @@
 }
 
 
+.dance-image{
+
+}
+
+
+.dance-image img{
+
+     transition: 1s;
+    padding: 2px;
+    margin-bottom: 5px;
+    width: 150px;
+    height: 150px;
+
+}
+
+.dance-image img:hover {
+    filter: grayscale(70%);
+    transform: scale(1.1);
+}
+
+
+.btn-sadie-outline {
+  background-color: transparent;
+    color: white;
+
+}
+
 
 
 

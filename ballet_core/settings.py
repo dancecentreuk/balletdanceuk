@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'pages.apps.PagesConfig',
     'courses.apps.CoursesConfig',
     'jobs.apps.JobsConfig',
+    'venues.apps.VenuesConfig',
     'blog.apps.BlogConfig',
     'mail.apps.MailConfig',
     'django.contrib.admin',
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ckeditor',
     'crispy_forms',
+
 ]
 
 AUTH_USER_MODEL = 'users.Account'
