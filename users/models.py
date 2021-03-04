@@ -7,9 +7,12 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from pages.choices import location_choices, gender_choices
 from PIL import Image
+from django.core.files.storage import default_storage
+from io import BytesIO
 from ckeditor.fields import RichTextField
 from django.template.defaultfilters import slugify
 from datetime import datetime
+
 
 
 
@@ -119,11 +122,19 @@ class Profile(models.Model):
 
     def save(self, *args, **kwargs):
         super(Profile, self).save(*args, **kwargs)
+        memfile = BytesIO()
         img = Image.open(self.profile_image)
         if img.height > 200 or img.width > 200:
             new_size = (200, 200)
+            img.thumbnail(new_size, Image.ANTIALIAS)
+            img.save(memfile, 'PNG', quality=95)
+            default_storage.save(self.profile_image.name, memfile)
+            memfile.close()
+            img.close()
             img.thumbnail(new_size)
             img.save(self.profile_image.path)
+
+
 
 
 
