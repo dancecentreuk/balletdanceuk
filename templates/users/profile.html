@@ -335,6 +335,54 @@
 
 
 
+                   <div class="row bg-light mt-4">
+                        <div class="bg-light mx-auto">
+                            <h2 class="p-1">Your Venues</h2>
+                        </div>
+                        {% for venue in venues %}
+                            <div class="col-md-12 ftco-animate">
+						<div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
+
+						  <div class="mb-4 mb-md-0 mr-5">
+						   <div class="job-post-item-header d-flex align-items-center">
+						     <h2 class="mr-3 text-black h4">{{ venue.name }}</h2>
+{#						     <div class="badge-wrap">#}
+{#                                 {% if venue.category.title == 'Bar' %}#}
+{#                                     <span class="bg-warning text-white badge py-2 px-3">Bar</span>#}
+{#                                 {% elif venue.category.title == 'Community Hall' %}#}
+{#                                     <span class="bg-primary text-white badge py-2 px-3">Com Hall</span>#}
+{#                                 {% elif venue.category == 'teens' %}#}
+{#                                     <span class="bg-secondary text-white badge py-2 px-3">Teen</span>#}
+{#                                 {% elif venue.category == 'adults' %}#}
+{#                                     <span class="bg-danger text-white badge py-2 px-3">Adults</span>#}
+{#                                 {% endif %}#}
+{#						     </div>#}
+						   </div>
+						   <div class="job-post-item-body d-block d-md-flex">
+						     <div class="mr-3"><span class="icon-layers"></span> <a href="#">{{ venue.author.first_name }}.</a></div>
+						     <div class="mr-3"><span class="icon-money"></span> <span>£{{ venue.cost}}/ph </span></div>
+						     <div class="mr-3"><span class="icon-layers"></span> <span>{{ venue.category }} </span></div>
+						     <div><span class="icon-my_location"></span> <span>{{ venue.location }}, UK</span></div>
+						   </div>
+						  </div>
+
+						  <div class="ml-auto d-flex">
+						  	<a href="{% url 'venues:venue-detail' venue.pk %}" class="btn btn-primary py-2 mr-1">View</a>
+                <a href="#" class="btn btn-danger rounded-circle btn-favorite d-flex align-items-center">
+                	<span class="icon-heart"></span>
+                </a>
+              </div>
+
+						</div>
+          </div>
+                        {% endfor %}
+                    </div>
+
+
+
+
+
+
 
 
 

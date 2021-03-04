@@ -10,6 +10,7 @@ from django.views.generic import CreateView, UpdateView, DetailView
 from .models import Profile, DancersProfile, Account, CompanyProfile, DancerImage
 from jobs.models import Listing
 from courses.models import WeeklyBalletClass
+from venues.models import Venue
 from pages.choices import location_choices, gender_choices
 
 from .forms import AccountRegisterForm, UserUpdateForm, DancersUpdateForm, CompanyUpdateForm, AccountProfileForm, \
@@ -105,6 +106,7 @@ class ProfileView(UpdateView):
         context['users_form'] = self.form_class_2(instance=user_id)
         context['listings'] = Listing.objects.filter(author=self.object.pk)
         context['courses'] = WeeklyBalletClass.objects.filter(author=self.object.pk)
+        context['venues'] = Venue.objects.filter(author=self.object.pk)
         if self.request.user.has_dancers_profile():
             dancer_id = get_object_or_404(DancersProfile, user_id=self.object.pk)
             context['form'] = self.form_class(instance=dancer_id)
