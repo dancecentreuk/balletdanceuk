@@ -120,19 +120,33 @@ class Profile(models.Model):
 
 
 
+    # def save(self, *args, **kwargs):
+    #     super(Profile, self).save(*args, **kwargs)
+    #     memfile = BytesIO()
+    #     img = Image.open(self.profile_image)
+    #     if img.height > 200 or img.width > 200:
+    #         new_size = (200, 200)
+    #         img.thumbnail(new_size, Image.ANTIALIAS)
+    #         img.save(memfile, 'PNG', quality=95)
+    #         default_storage.save(self.profile_image.name, memfile)
+    #         memfile.close()
+    #         img.close()
+    #         img.thumbnail(new_size)
+    #         img.save(self.profile_image.path)
+
     def save(self, *args, **kwargs):
-        super(Profile, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
+
         memfile = BytesIO()
+
         img = Image.open(self.profile_image)
-        if img.height > 200 or img.width > 200:
-            new_size = (200, 200)
-            img.thumbnail(new_size, Image.ANTIALIAS)
+        if img.height > 500 or img.width > 500:
+            output_size = (500, 500)
+            img.thumbnail(output_size, Image.ANTIALIAS)
             img.save(memfile, 'PNG', quality=95)
             default_storage.save(self.profile_image.name, memfile)
             memfile.close()
             img.close()
-            img.thumbnail(new_size)
-            img.save(self.profile_image.path)
 
 
 
