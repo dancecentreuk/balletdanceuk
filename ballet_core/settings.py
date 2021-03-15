@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ckeditor',
     'crispy_forms',
+    'django.contrib.humanize'
 
 ]
 

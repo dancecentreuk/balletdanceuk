@@ -24,7 +24,7 @@
 
           {% if request.user.is_authenticated %}
 
-			     <form action="#" method="POST" class="p-5 bg-white">
+			     <form action="#" method="POST" class="p-5 bg-white" enctype="multipart/form-data">
                  <h2>Add Ballet Class ...</h2>
                  {% csrf_token %}
 

@@ -4,9 +4,11 @@ from django.views.generic import TemplateView, ListView, DetailView
 from courses.models import WeeklyBalletClass, Level
 from users.models import DancersProfile, Account, DancerImage
 from jobs.models import Listing
+from blog.models import BlogPost
 from datetime import date
 from django.utils.timezone import now
 from .choices import location_choices, age_choices, gender_choices
+from jobs.models import Category
 
 
 class HomeView(ListView):
@@ -19,10 +21,15 @@ class HomeView(ListView):
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
         context['levels'] = Level.objects.all()
+        context['location_choices'] = location_choices
+        context['age_choices'] = age_choices
         context['talents'] = DancersProfile.objects.order_by("-pk")
         context['listings'] = Listing.objects.filter(is_posting=True).order_by('-pk')
         context['postings'] = Listing.objects.filter(is_posting=False).order_by('date')
+        context['all_jobs_count'] = Listing.objects.all().count()
+        context['blogposts'] = BlogPost.objects.filter(featured=True)
         context['classes_count'] = WeeklyBalletClass.objects.all().count()
+        context['job_categories'] = Category.objects.all()
         return context
 
 

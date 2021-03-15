@@ -295,6 +295,22 @@
 
 
 
+@media screen and (min-width: 768px) {
+  .job-split {
+     border-left: solid;
+        border-left-width: 1px;
+        border-left-color: darkseagreen;
+  }
+}
+
+
+@media screen and (min-width: 768px) {
+  .posting-split {
+     border-left: solid;
+        border-left-width: 1px;
+        border-left-color: steelblue;
+  }
+}
 
 
 

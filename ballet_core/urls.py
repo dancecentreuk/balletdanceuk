@@ -12,5 +12,5 @@ urlpatterns = [
     path('jobs/', include('jobs.urls')),
     path('new-mail/', include('mail.urls')),
     path('venues/', include('venues.urls')),
-    path('blog/', include('blog.urls')),
+    path('blogs/', include('blog.urls')),
 ] +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

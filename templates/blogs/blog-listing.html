@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="hero-wrap js-fullheight" style="background-image: url('{% static 'images/ballet_bg_2.jpg' %}');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start" data-scrollax-parent="true">
+          <div class="col-md-8 ftco-animate text-center text-md-left mb-5" data-scrollax=" properties: { translateY: '70%' }">
+          	<p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-3"><a href="{% url 'pages:home' %}">Home <i class="ion-ios-arrow-forward"></i></a></span> <span class="mr-3">Blogs</span> <span></span></p>
+            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Blogs</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+     <section class="ftco-section ftco-counter">
+    	<div class="container">
+    		<div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 heading-section text-center ftco-animate">
+            <h2 class="mb-4">Blog<span>Categories</span> </h2>
+          </div>
+        </div>
+        <div class="row">
+            {% for category in categories %}
+        	<div class="col-md-3 ftco-animate">
+        		<ul class="category">
+        			<li><a href="{% url 'blog:category_detail' category.pk category.slug %}">{{ category.title }} <span class="number" data-number="{{ category.categories_count_listings }}">0</span></a></li>
+        		</ul>
+        	</div>
+            {% endfor %}
+
+        </div>
+    	</div>
+    </section>
+
+    <section class="ftco-section bg-light">
+      <div class="container">
+        <div class="row d-flex">
+            {% for article in articles %}
+          <div class="col-md-3 d-flex ftco-animate">
+            <div class="blog-entry align-self-stretch">
+              <a href="{% url 'blog:blog-detail' article.pk %}" class="block-20" style="background-image: url('{{ article.blog_image.url }}');">
+              </a>
+              <div class="text mt-3">
+              	<div class="meta mb-2">
+                  <div>{{ article.timestamp.date }}</div>
+                  <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+                    <br>
+                    <div><a href="#">{{ article.category }}</a></div>
+                </div>
+                <h3 class="heading"><a href="{% url 'blog:blog-detail' article.pk %}">{{ article.title }}</a></h3>
+               <p>{{ article.content | truncatechars:100 }}</p>
+                  <div class="meta mb-2">
+                  <div><a href="#" class="text-danger">{{ article.author.first_name }}</a></div>
+                  <div><a href="#" class="text-danger">{{ article.author.last_name }}</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+            {% endfor %}
+        </div>
+{#        <div class="row mt-5">#}
+{#          <div class="col text-center">#}
+{#            <div class="block-27">#}
+{#              <ul>#}
+{#                <li><a href="#">&lt;</a></li>#}
+{#                <li class="active"><span>1</span></li>#}
+{#                <li><a href="#">2</a></li>#}
+{#                <li><a href="#">3</a></li>#}
+{#                <li><a href="#">4</a></li>#}
+{#                <li><a href="#">5</a></li>#}
+{#                <li><a href="#">&gt;</a></li>#}
+{#              </ul>#}
+{#            </div>#}
+{#          </div>#}
+{#        </div>#}
+
+                      <div class="row mt-5">
+                    {% if is_paginated %}
+          <div class="col text-center">
+            <div class="block-27">
+              <ul>
+                  {% if page_obj.has_previous %}
+                      <li><a href="?page={{ page_obj.previous_page_number }}">&lt;</a></li>
+                  {% else %}
+                      <li class="disabled"><span>&lt;</span></li>
+                  {% endif %}
+              {% for i in paginator.page_range %}
+              {% if page_obj.number == i %}
+              <li class="active"><span>{{ i }}</span></li>
+              {% else %}
+                <li><a href="?page={{ i }}">{{ i }}</a></li>
+              {% endif %}
+              {% endfor %}
+              {% if page_obj.has_next %}
+                      <li><a href="?page={{ page_obj.next_page_number }}">&gt;</a></li>
+                  {% else %}
+                      <li class="disabled"><span>&gt;</span></li>
+                  {% endif %}
+
+              </ul>
+            </div>
+          </div>
+                {% endif %}
+        </div>
+
+
+
+
+
+
+
+      </div>
+    </section>
+{% endblock %}

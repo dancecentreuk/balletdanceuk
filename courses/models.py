@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from pages.choices import day_choices, course_level_choices, location_choices, age_choices
 from django.template.defaultfilters import slugify
+from django.utils import timezone
 
 # Create your models here.
 
@@ -49,6 +50,8 @@ class WeeklyBalletClass(models.Model):
     experience = models.CharField(max_length=300, blank=True)
     average_age = models.CharField(max_length=300, blank=True)
     drop_in = models.CharField(max_length=300, blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     about_dance_class = models.TextField()
     is_published = models.BooleanField(default=True)
     is_allowed = models.BooleanField(default=True)
@@ -64,6 +67,11 @@ class WeeklyBalletClass(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(WeeklyBalletClass, self).save(*args, **kwargs)
+
+    def updated_info(self):
+        if self.updated is None:
+            return self.timestamp
+        return self.updated
 
 
     class Meta:

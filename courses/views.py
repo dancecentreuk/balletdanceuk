@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, UpdateView, DetailView
@@ -56,6 +56,7 @@ class CreateCourseView(SuccessMessageMixin, CreateView):
         return reverse('courses:course-detail', kwargs={'pk': self.object.id, 'slug': self.object.slug})
 
 
+@method_decorator(login_required(login_url='/'), name='dispatch')
 class UpdateCourseView(SuccessMessageMixin, UpdateView):
     model = WeeklyBalletClass
     template_name = 'courses/update-course.html'
@@ -75,7 +76,28 @@ class UpdateCourseView(SuccessMessageMixin, UpdateView):
         return super(UpdateCourseView, self).get(request, *args, **kwargs)
 
     def get_success_url(self):
-        return reverse('jobs:single-listing', kwargs={'pk': self.object.pk, 'slug': self.object.slug})
+        return reverse('courses:course-detail', kwargs={'pk': self.object.pk, 'slug': self.object.slug})
+
+
+class CourseLevelDetailView(ListView):
+    model = WeeklyBalletClass
+    template_name = 'courses/level-detail.html'
+    context_object_name = 'courses'
+    paginate_by = 2
+
+    def get_queryset(self):
+        self.level = get_object_or_404(Level, pk=self.kwargs['pk'])
+        return WeeklyBalletClass.objects.filter(course_level=self.level).filter(is_allowed=True)
+
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(CourseLevelDetailView, self).get_context_data(*args, **kwargs)
+        self.level = get_object_or_404(Level, pk=self.kwargs['pk'])
+        context['levels'] = Level.objects.all()
+        context['level'] = self.level
+        context['age_choices'] = age_choices
+        context['location_choices'] = location_choices
+        return context
 
 
 def searchCourse(request):
@@ -98,7 +120,7 @@ def searchCourse(request):
         if location:
             queryset_list = queryset_list.filter(location=location)
 
-    paginator = Paginator(queryset_list, 2)
+    paginator = Paginator(queryset_list, 10)
     page = request.GET.get('page')
     paged_listings = paginator.get_page(page)
 
