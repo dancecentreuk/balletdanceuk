@@ -20,7 +20,7 @@
         <div class="row">
           <div class="col-md-8 ftco-animate">
             <h2 class="mb-3">{{ listing.title }}</h2>
-            <p>{{ listing.content }}</p>
+            <p>{{ listing.content | linebreaks }}</p>
             <p>
               <img src="{{ listing.blog_image.url }}" alt="" class="img-fluid">
             </p>
