@@ -109,7 +109,7 @@
         </div>
         <div class="row">
             {% for level in levels %}
-        	<div class="col-md-3 ftco-animate">
+        	<div class="col-lg-3 col-md-4 col-sm-6 ftco-animate">
         		<ul class="category">
         			<li><a href="{% url 'courses:level_detail' level.pk level.slug %}">{{ level.title }} <span class="number" data-number="{{ level.courses_count }}">0</span></a></li>
         		</ul>

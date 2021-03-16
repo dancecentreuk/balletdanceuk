@@ -155,7 +155,7 @@
         </div>
         <div class="row">
             {% for category in categories %}
-        	<div class="col-md-3 ftco-animate">
+        	<div class="col-lg-3 col-md-4 col-sm-6 ftco-animate">
         		<ul class="category">
         			<li><a href="{% url 'jobs:category-listings' category.slug category.pk %}">{{ category.title }} <span class="number" data-number="{{ category.categories_count_listings }}">0</span></a></li>
         		</ul>
