@@ -81,7 +81,7 @@
 
            <div class="tag-widget post-tag-container mb-5 mt-5">
               <div class="tagcloud">
-                <a href="#" class="tag-cloud-link">{{ listing.location }}</a>
+                <a href="{% url 'jobs:location-postings' listing.location %}" class="tag-cloud-link">{{ listing.location }}</a>
                 <a href="{% url 'jobs:category-postings' listing.category.slug listing.category.pk %}" class="tag-cloud-link">{{ listing.category }}</a>
 
               </div>

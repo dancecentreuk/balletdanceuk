@@ -323,4 +323,28 @@ class CategoryPostingsView(ListView):
         return context
 
 
+class LocationPostingsView(ListView):
+    model = Listing
+    template_name = 'jobs/location-postings.html'
+    context_object_name = 'listings'
+    paginate_by = 10
+
+    def get_queryset(self):
+        # self.location = get_object_or_404(Listing, location=self.kwargs['location'])
+        self.location = self.kwargs['location']
+
+        print(self.location)
+        return Listing.objects.filter(location=self.location)
+
+
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(LocationPostingsView, self).get_context_data(*args, **kwargs)
+        # self.category = get_object_or_404(Category, pk=self.kwargs['pk'])
+        self.location = self.kwargs['location']
+        context['categories'] = Category.objects.all()
+        context['location'] = self.location
+        return context
+
+
 

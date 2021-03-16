@@ -9,21 +9,21 @@
          </div>
      {% endfor %}
  {% endif %}
-    <div class="hero-wrap js-fullheight" style="background-image: url('{% static 'images/ballet_bg_4.jpg' %}');" data-stellar-background-ratio="0.5">
+    <div class="hero-wrap js-fullheight" style="background-image: url('{% static 'images/ballet_dance_jobs_bg.jpg' %}');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
           <div class="col-xl-10 ftco-animate mb-5 pb-5" data-scrollax=" properties: { translateY: '70%' }">
           	<p class="mb-4 mt-5 pt-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">We have <span class="number" data-number="850000">0</span> great job offers you deserve!</p>
-            <h1 class="mb-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Search <br><span>Specific Date Dance Jobs</span></h1>
+            <h1 class="mb-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Search<br><span>Specific Dates Dance Jobs</span></h1>
 
 						<div class="ftco-search">
 							<div class="row">
 		            <div class="col-md-12 nav-link-wrap">
 			            <div class="nav nav-pills text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-			              <a class="nav-link active mr-md-1" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">Find a Job</a>
+			              <a class="nav-link active mr-md-1" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">Find a Specific Date Job</a>
 
-			              <a class="nav-link" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="false">Find a Candidate</a>
+			              <a class="nav-link" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="false">Find a Dance Job</a>
 
 			            </div>
 			          </div>
@@ -32,40 +32,46 @@
 			            <div class="tab-content p-4" id="v-pills-tabContent">
 
 			              <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
-			              	<form action="#" class="search-job">
+			              	<form action="{% url 'jobs:search-postings' %}" class="search-job" method="get" >
 			              		<div class="row">
 			              			<div class="col-md">
 			              				<div class="form-group">
 				              				<div class="form-field">
 				              					<div class="icon"><span class="icon-briefcase"></span></div>
-								                <input type="text" class="form-control" placeholder="eg. Garphic. Web Developer">
+								                <input type="text" class="form-control" name="job_title" placeholder="eg. Garphic. Web Developer">
 								              </div>
 							              </div>
 			              			</div>
+
 			              			<div class="col-md">
 			              				<div class="form-group">
 			              					<div class="form-field">
 				              					<div class="select-wrap">
 						                      <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-						                      <select name="" id="" class="form-control">
-						                      	<option value="">Category</option>
-						                      	<option value="">Full Time</option>
-						                        <option value="">Part Time</option>
-						                        <option value="">Freelance</option>
-						                        <option value="">Internship</option>
-						                        <option value="">Temporary</option>
+						                      <select name="job_type" id="" class="form-control">
+                                                  <option value="" selected="true">Choose Category</option>
+                                                  {% for category in categories %}
+                                                      <option value="{{ category.id }}">{{ category.title }}</option>
+                                                  {% endfor %}
 						                      </select>
 						                    </div>
 								              </div>
 							              </div>
 			              			</div>
-			              			<div class="col-md">
-			              				<div class="form-group">
-			              					<div class="form-field">
-				              					<div class="icon"><span class="icon-map-marker"></span></div>
-								                <input type="text" class="form-control" placeholder="Location">
-								              </div>
-							              </div>
+                                    <div class="col-md">
+                                        <div class="form-group">
+                                            <div class="form-field">
+                                                <div class="select-wrap">
+                                              <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                              <select name="job_location" id="" class="form-control">
+                                                  <option selected="true" disabled="disabled">Location</option>
+                                                  {% for key, value in location_choices %}
+                                                    <option value="{{ key }}">{{ value }}</option>
+                                                  {% endfor %}
+                                              </select>
+                                            </div>
+                                              </div>
+                                          </div>
 			              			</div>
 			              			<div class="col-md">
 			              				<div class="form-group">
@@ -79,40 +85,46 @@
 			              </div>
 
 			              <div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-performance-tab">
-			              	<form action="#" class="search-job">
+			              	<form action="{% url 'jobs:search-listings' %}" class="search-job" method="get" >
 			              		<div class="row">
 			              			<div class="col-md">
 			              				<div class="form-group">
 				              				<div class="form-field">
-				              					<div class="icon"><span class="icon-user"></span></div>
-								                <input type="text" class="form-control" placeholder="eg. Adam Scott">
+				              					<div class="icon"><span class="icon-briefcase"></span></div>
+								                <input type="text" class="form-control" name="job_title" placeholder="eg. Garphic. Web Developer">
 								              </div>
 							              </div>
 			              			</div>
+
 			              			<div class="col-md">
 			              				<div class="form-group">
 			              					<div class="form-field">
 				              					<div class="select-wrap">
 						                      <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-						                      <select name="" id="" class="form-control">
-						                      	<option value="">Category</option>
-						                      	<option value="">Full Time</option>
-						                        <option value="">Part Time</option>
-						                        <option value="">Freelance</option>
-						                        <option value="">Internship</option>
-						                        <option value="">Temporary</option>
+						                      <select name="job_type" id="" class="form-control">
+                                                  <option value="" selected="true">Choose Category</option>
+                                                  {% for category in categories %}
+                                                      <option value="{{ category.id }}">{{ category.title }}</option>
+                                                  {% endfor %}
 						                      </select>
 						                    </div>
 								              </div>
 							              </div>
 			              			</div>
-			              			<div class="col-md">
-			              				<div class="form-group">
-			              					<div class="form-field">
-				              					<div class="icon"><span class="icon-map-marker"></span></div>
-								                <input type="text" class="form-control" placeholder="Location">
-								              </div>
-							              </div>
+                                    <div class="col-md">
+                                        <div class="form-group">
+                                            <div class="form-field">
+                                                <div class="select-wrap">
+                                              <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                              <select name="job_location" id="" class="form-control">
+                                                  <option selected="true" disabled="disabled">Location</option>
+                                                  {% for key, value in location_choices %}
+                                                    <option value="{{ key }}">{{ value }}</option>
+                                                  {% endfor %}
+                                              </select>
+                                            </div>
+                                              </div>
+                                          </div>
 			              			</div>
 			              			<div class="col-md">
 			              				<div class="form-group">
@@ -138,8 +150,8 @@
     	<div class="container">
     		<div class="row justify-content-center mb-5 pb-3">
           <div class="col-md-7 heading-section text-center ftco-animate">
-          	<span class="subheading">Results for {{ category }}</span>
-            <h2 class="mb-4"><span>Current</span> Specific Date Jobs</h2>
+              <span class="subheading text-info">Results for Specific Date Jobs In {{ location | title }}</span>
+            <h2 class="mb-4"><span>Specicific Dates</span> Job Categories</h2>
           </div>
         </div>
         <div class="row">
@@ -159,8 +171,8 @@
 			<div class="container">
 				<div class="row justify-content-center mb-5 pb-3">
           <div class="col-md-7 heading-section text-center ftco-animate">
-          	<span class="subheading">Specific Date</span>
-            <h2 class="mb-4"><span></span>{{ category }}</h2>
+          	<span class="subheading">These are  Jobs with Specific Dates</span>
+            <h2 class="mb-4"><span>Specific Date</span> Dance Jobs</h2>
           </div>
         </div>
                 <div class="row">
@@ -172,18 +184,30 @@
 						   <div class="job-post-item-header d-flex align-items-center">
 						     <h2 class="mr-3 text-black h4">{{ listing.title }}</h2>
                                <div class="badge-wrap">
-                                 {% if listing.is_posting == False %}
-                                     <span class="bg-warning text-white badge py-2 px-3">Dated</span>
+                                   {% if listing.is_posting == False %}
+                                       <span class="bg-warning text-white badge py-2 px-3">Dated</span>
                                    {% endif %}
                                </div>
-
+{#						     <div class="badge-wrap">#}
+{#                                 {% if course.age_group == 'toddlers' %}#}
+{#                                     <span class="bg-warning text-white badge py-2 px-3">Toddlers</span>#}
+{#                                 {% elif course.age_group == 'children' %}#}
+{#                                     <span class="bg-primary text-white badge py-2 px-3">Children</span>#}
+{#                                 {% elif course.age_group == 'teens' %}#}
+{#                                     <span class="bg-secondary text-white badge py-2 px-3">Teen</span>#}
+{#                                 {% elif course.age_group == 'adults' %}#}
+{#                                     <span class="bg-danger text-white badge py-2 px-3">Adults</span>#}
+{#                                 {% endif %}#}
+{#						     </div>#}
 						   </div>
 						   <div class="job-post-item-body d-block d-md-flex">
-						     <div class="mr-3"><span class="icon-layers"></span> <a href="#">{{ listing.author.first_name }}.</a></div>
+						     <div class="mr-3"><span class="icon-layers"></span> <a href="#">{{ listing.author.first_name |title }}.</a></div>
+						     <div class="mr-3"><span class="icon-layers"></span> {{ listing.category }}.</div>
 						     <div class="mr-3"><span class="icon-money"></span> <span>£{{ listing.fee}} </span></div>
-						     <div class="mr-3"><span class="icon-layers"></span> <span>{{ listing.date}} </span></div>
-						     <div><span class="icon-my_location"></span> <span>{{ listing.location }}, UK</span></div>
+						     <div class="mr-3"><span class="icon-date_range"></span> <span>{{ listing.date}} </span></div>
 						   </div>
+						     <div><span class="icon-my_location"></span> <span>{{ listing.location | title }}, UK</span></div>
+
 						  </div>
 
 						  <div class="ml-auto d-flex">
@@ -227,5 +251,6 @@
         </div>
 			</div>
 		</section>
+
 
 {% endblock %}
