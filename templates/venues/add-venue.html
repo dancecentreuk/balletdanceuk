@@ -24,7 +24,7 @@
 
           {% if request.user.is_authenticated %}
 
-			     <form action="#" method="POST" class="p-5 bg-white">
+			     <form action="#" method="POST" class="p-5 bg-white" ENCTYPE="multipart/form-data">
                  <h2>Add Venue For Hire ...</h2>
                  {% csrf_token %}
 

@@ -48,6 +48,8 @@ class Venue(models.Model):
     notes = models.TextField(blank=True)
     is_published = models.BooleanField(default=True)
     is_allowed = models.BooleanField(default=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     venue_image = models.ImageField(upload_to='venue_image/%Y/%m/%d', default='dance_class.jpg')
     venue_image_1 = models.ImageField(upload_to='venue_image/%Y/%m/%d', blank=True)
     venue_image_2 = models.ImageField(upload_to='venue_image/%Y/%m/%d', blank=True)
@@ -59,6 +61,11 @@ class Venue(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.author)
         super(Venue, self).save(*args, **kwargs)
+
+    def updated_info(self):
+        if self.updated is None:
+            return self.timestamp
+        return self.updated
 
 
     class Meta:

@@ -12,6 +12,7 @@ urlpatterns = [
     path('category-detail/listings/<slug:slug>/<int:pk>/', CategoryListingsView.as_view(), name='category-listings'),
     path('category-detail/postings/<slug:slug>/<int:pk>/', CategoryPostingsView.as_view(), name='category-postings'),
     path('location-detail/postings/<slug:location>/', LocationPostingsView.as_view(), name='location-postings'),
+    path('location-detail/listings/<slug:location>/', LocationListingsView.as_view(), name='location-listings'),
     path('search/listings/', search, name='search-listings'),
     path('search/postings/', searchPosting, name='search-postings'),
     path('postings/', PostingView.as_view(), name='postings'),

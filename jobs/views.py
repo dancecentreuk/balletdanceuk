@@ -330,21 +330,38 @@ class LocationPostingsView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        # self.location = get_object_or_404(Listing, location=self.kwargs['location'])
         self.location = self.kwargs['location']
-
-        print(self.location)
-        return Listing.objects.filter(location=self.location)
+        return Listing.objects.filter(location=self.location).filter(is_posting=False).order_by('date')
 
 
 
     def get_context_data(self, *args, **kwargs):
         context = super(LocationPostingsView, self).get_context_data(*args, **kwargs)
-        # self.category = get_object_or_404(Category, pk=self.kwargs['pk'])
         self.location = self.kwargs['location']
         context['categories'] = Category.objects.all()
         context['location'] = self.location
         return context
 
 
+
+class LocationListingsView(ListView):
+    model = Listing
+    template_name = 'jobs/location-listings.html'
+    context_object_name = 'listings'
+    paginate_by = 10
+
+    def get_queryset(self):
+        # self.location = get_object_or_404(Listing, location=self.kwargs['location'])
+        self.location = self.kwargs['location']
+        return Listing.objects.filter(location=self.location).filter(is_posting=True)
+
+
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(LocationListingsView, self).get_context_data(*args, **kwargs)
+        # self.category = get_object_or_404(Category, pk=self.kwargs['pk'])
+        self.location = self.kwargs['location']
+        context['categories'] = Category.objects.all()
+        context['location'] = self.location
+        return context
 
