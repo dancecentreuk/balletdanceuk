@@ -394,7 +394,7 @@
                                 </div>
                                 <div class="job-post-item-body d-block d-md-flex">
                                     <div class="mr-3"><span class="icon-layers"></span> <a
-                                            href="#">{{ listing.author.first_name }}.</a></div>
+                                            href="{% url 'pages:profile-info'  listing.author.profile.id listing.author.first_name %}">{{ listing.author.first_name }}.</a></div>
                                     <div class="mr-3"><span class="icon-money"></span> <span>£{{ listing.fee }} </span>
                                     </div>
                                     <div class="mr-3"><span class="icon-layers"></span>

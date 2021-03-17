@@ -170,17 +170,10 @@
 
           </div> <!-- .col-md-8 -->
           <div class="col-md-4 sidebar ftco-animate">
-            <div class="sidebar-box">
-              <form action="#" class="search-form">
-                <div class="form-group">
-                  <span class="icon icon-search"></span>
-                  <input type="text" class="form-control" placeholder="Type a keyword and hit enter">
-                </div>
-              </form>
-            </div>
-            <div class="sidebar-box ftco-animate">
+
+            <div class="sidebar-box ftco-animate pt-1">
               <div class="categories">
-                <h3>Categories</h3>
+                <h3 class="text-info pt-0">Categories</h3>
                   {% for category in categories %}
                 <li><a href="">{{ category.title }} <span>({{ category.categories_count }})</span></a></li>
                   {% endfor %}
@@ -191,16 +184,9 @@
 
 
             <div class="sidebar-box ftco-animate">
-              <h3>Tag Cloud</h3>
+              <h3>Advert</h3>
               <div class="tagcloud">
-                <a href="#" class="tag-cloud-link">dish</a>
-                <a href="#" class="tag-cloud-link">menu</a>
-                <a href="#" class="tag-cloud-link">food</a>
-                <a href="#" class="tag-cloud-link">sweet</a>
-                <a href="#" class="tag-cloud-link">tasty</a>
-                <a href="#" class="tag-cloud-link">delicious</a>
-                <a href="#" class="tag-cloud-link">desserts</a>
-                <a href="#" class="tag-cloud-link">drinks</a>
+
               </div>
             </div>
 

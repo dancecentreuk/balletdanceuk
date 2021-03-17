@@ -2,13 +2,14 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView, ListView, DetailView
 from courses.models import WeeklyBalletClass, Level
-from users.models import DancersProfile, Account, DancerImage
+from users.models import Profile, DancersProfile, Account, DancerImage
 from jobs.models import Listing
 from blog.models import BlogPost
 from datetime import date
 from django.utils.timezone import now
 from .choices import location_choices, age_choices, gender_choices
 from jobs.models import Category
+from venues.models import Venue
 
 
 class HomeView(ListView):
@@ -68,6 +69,24 @@ class TalentDetailView(DetailView):
         context['courses'] = WeeklyBalletClass.objects.filter(author_id=author)
         context['images'] = DancerImage.objects.filter(owner=dance_profile)
         return context
+
+
+class ProfileInfoView(DetailView):
+    template_name = 'pages/profile-info.html'
+    model = Profile
+    context_object_name = 'profile'
+
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileInfoView, self).get_context_data(**kwargs)
+        profile = get_object_or_404(Profile, pk=self.kwargs['pk'])
+        user = profile.user.id
+        context['listings'] = Listing.objects.filter(author_id=user)
+        context['courses'] = WeeklyBalletClass.objects.filter(author_id=user)
+        context['venues'] = Venue.objects.filter(author_id=user)
+        context['blogs'] = BlogPost.objects.all()[:3]
+        return context
+
 
 
 def searchTalent(request):
