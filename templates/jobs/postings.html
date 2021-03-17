@@ -187,20 +187,10 @@
                                        <span class="bg-warning text-white badge py-2 px-3">Dated</span>
                                    {% endif %}
                                </div>
-{#						     <div class="badge-wrap">#}
-{#                                 {% if course.age_group == 'toddlers' %}#}
-{#                                     <span class="bg-warning text-white badge py-2 px-3">Toddlers</span>#}
-{#                                 {% elif course.age_group == 'children' %}#}
-{#                                     <span class="bg-primary text-white badge py-2 px-3">Children</span>#}
-{#                                 {% elif course.age_group == 'teens' %}#}
-{#                                     <span class="bg-secondary text-white badge py-2 px-3">Teen</span>#}
-{#                                 {% elif course.age_group == 'adults' %}#}
-{#                                     <span class="bg-danger text-white badge py-2 px-3">Adults</span>#}
-{#                                 {% endif %}#}
-{#						     </div>#}
+
 						   </div>
 						   <div class="job-post-item-body d-block d-md-flex">
-						     <div class="mr-3"><span class="icon-layers"></span> <a href="#">{{ listing.author.first_name |title }}.</a></div>
+						     <div class="mr-3"><span class="icon-layers"></span> <a href="{% url 'pages:profile-info' listing.author.id listing.author.first_name %}">{{ listing.author.first_name |title }}.</a></div>
 						     <div class="mr-3"><span class="icon-layers"></span> {{ listing.category }}.</div>
 						     <div class="mr-3"><span class="icon-money"></span> <span>£{{ listing.fee}} </span></div>
 						     <div class="mr-3"><span class="icon-date_range"></span> <span>{{ listing.date}} </span></div>

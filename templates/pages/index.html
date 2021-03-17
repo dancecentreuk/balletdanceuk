@@ -218,7 +218,7 @@
         <div class="container">
             <div class="row justify-content-center mb-5 pb-3">
                 <div class="col-md-7 heading-section text-center ftco-animate">
-                    <span class="subheading">Categories work wating for you</span>
+{#                    <span class="subheading"></span>#}
                     <h2 class="mb-4"><span>Current</span> Ballet Classes</h2>
                 </div>
             </div>
@@ -241,7 +241,7 @@
         <div class="container">
             <div class="row justify-content-center mb-5 pb-3">
                 <div class="col-md-7 heading-section text-center ftco-animate">
-                    <span class="subheading">Recently Added Jobs</span>
+{#                    <span class="subheading"></span>#}
                     <h2 class="mb-4"><span>Recently Added </span>Classes</h2>
                 </div>
             </div>
@@ -266,7 +266,7 @@
                                     </div>
                                 </div>
                                 <div class="job-post-item-body d-block d-md-flex">
-                                    <div class="mr-3"><span class="icon-layers"></span> <a href="#">Google, Inc.</a>
+                                    <div class="mr-3"><span class="icon-layers"></span> <a href="{% url 'pages:profile-info' course.author.id course.author.first_name %}">{{ course.author.first_name }}</a>
                                     </div>
                                     <div class="mr-3"><span class="icon-my_location"></span>
                                         <span>{{ course.course_level }} Level</span></div>
@@ -561,8 +561,7 @@
                             <h3 class="heading"><a href="{% url 'blog:blog-detail' blog.pk %}">{{ blog.title }}</a></h3>
                             <p>{{ blog.content | truncatechars:100 }}</p>
                               <div class="meta mb-2">
-                                  <div><a href="#" class="text-danger">{{ blog.author.first_name }}</a></div>
-                                  <div><a href="#" class="text-danger">{{ blog.author.last_name }}</a></div>
+                                  <div><a href="{% url 'pages:profile-info' blog.author.id blog.author.first_name %}" class="text-danger">{{ blog.author.first_name }} {{ blog.author.last_name }}</a></div>
                                 </div>
                         </div>
                     </div>

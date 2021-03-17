@@ -8,8 +8,8 @@
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start" data-scrollax-parent="true">
           <div class="col-md-8 ftco-animate text-center text-md-left mb-5" data-scrollax=" properties: { translateY: '70%' }">
-          	<p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-3"><a href="{% url 'pages:home' %}">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>List Cover Dance Job</span></p>
-            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">List Cover Dance Job</h1>
+          	<p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-3"><a href="{% url 'pages:home' %}">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>List Specific Dance Job</span></p>
+            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">List Specific Date Dance Job</h1>
           </div>
         </div>
       </div>
@@ -26,7 +26,7 @@
           {% if request.user.is_authenticated %}
 
 			     <form action="#" method="POST" class="p-5 bg-white">
-                 <h2>List Cover Dance Job ...</h2>
+                 <h2>List Specific Date Dance Job ...</h2>
                  {% csrf_token %}
 
                  {% if form.errors %}
