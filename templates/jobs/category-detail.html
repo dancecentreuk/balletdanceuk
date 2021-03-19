@@ -138,7 +138,7 @@
     	<div class="container">
     		<div class="row justify-content-center mb-5 pb-3">
           <div class="col-md-7 heading-section text-center ftco-animate">
-          	<span class="subheading">Results for {{ category }}</span>
+              <span class="subheading text-info">Results for {{ category | title }} jobs</span>
             <h2 class="mb-4"><span>Current</span> Jobs</h2>
           </div>
         </div>
@@ -159,8 +159,8 @@
 			<div class="container">
 				<div class="row justify-content-center mb-5 pb-3">
           <div class="col-md-7 heading-section text-center ftco-animate">
-          	<span class="subheading">Recently Added Jobs</span>
-            <h2 class="mb-4"><span>Recently Added </span>{{ category }}</h2>
+{#          	<span class="subheading">Recently Added Jobs</span>#}
+            <h2 class="mb-4"><span>Jobs: </span>{{ category }}</h2>
           </div>
         </div>
                 <div class="row">
@@ -184,8 +184,9 @@
 {#						     </div>#}
 						   </div>
 						   <div class="job-post-item-body d-block d-md-flex">
-						     <div class="mr-3"><span class="icon-layers"></span> <a href="#">{{ listing.author.first_name }}.</a></div>
+						     <div class="mr-3"><span class="icon-layers"></span> <a href="{% url 'pages:profile-info' listing.author.id listing.author.first_name %}">{{ listing.author.first_name }}.</a></div>
 						     <div class="mr-3"><span class="icon-money"></span> <span>£{{ listing.fee}} </span></div>
+						     <div class="mr-3"><span class="icon-layers"></span> <span>{{ listing.category}} </span></div>
 						     <div><span class="icon-my_location"></span> <span>{{ listing.location }}, UK</span></div>
 						   </div>
 						  </div>

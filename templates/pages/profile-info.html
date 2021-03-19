@@ -31,11 +31,10 @@
                 <div class="col-md-8 ftco-animate text-center text-md-left mb-5"
                      data-scrollax=" properties: { translateY: '70%' }">
                     <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span
-                            class="mr-3"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span>
-                        <span class="mr-3"><a href="blog.html">Blog <i class="ion-ios-arrow-forward"></i></a></span>
-                        <span>Single</span></p>
-                    <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Update
-                        Profile</h1>
+                            class="mr-3"><a href="{% url 'pages:home' %}">Home <i class="ion-ios-arrow-forward"></i></a></span>
+                        <span>Profile</span></p>
+                    <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
+                        User Profile</h1>
                 </div>
             </div>
         </div>
@@ -61,7 +60,6 @@
                             <div class="col-md-8">
                                 <div class="card-body bg-light">
                                     <h4 class="card-title">{{ profile.user.first_name | title }} {{ profile.user.last_name | title }}</h4>
-                                    <div class="col-12">{{ profile.date_of_birth }}</div>
                                     <div class="col-12">{{ profile.get_location_display }}</div>
                                     <p class="card-text"><small class="text-muted">Last
                                         updated {{ profile.created }} mins ago</small></p>
@@ -174,7 +172,7 @@
 
                     <div class="row bg-light mt-5">
                         <div class="bg-light mx-auto">
-                            <h5 class="p-1">{{ profile.user.first_name | title }} Job's</h5>
+                            <h5 class="p-1">{{ profile.user.first_name | title }}'s Jobs</h5>
                         </div>
                         {% for listing in listings %}
                             <div class="col-md-12 ftco-animate">
@@ -204,8 +202,13 @@
                                     </div>
 
                                     <div class="ml-auto d-flex">
-                                        <a href="{% url 'jobs:single-listing' listing.slug listing.pk %}"
-                                           class="btn btn-primary py-2 mr-1">View</a>
+                                         {% if listing.is_posting == True %}
+                                             <a href="{% url 'jobs:single-listing' listing.slug listing.pk %}"
+                                                class="btn btn-primary py-2 mr-1">View</a>
+                                         {% else %}
+                                             <a href="{% url 'jobs:single-posting' listing.slug listing.pk %}"
+                                                class="btn btn-primary py-2 mr-1">View</a>
+                                        {% endif %}
                                         <a href="#"
                                            class="btn btn-danger rounded-circle btn-favorite d-flex align-items-center">
                                             <span class="icon-heart"></span>
@@ -222,7 +225,7 @@
 
                                     <div class="row bg-light mt-5">
                         <div class="bg-light mx-auto">
-                            <h3 class="p-1">{{ profile.user.first_name |title }} Classes</h3>
+                            <h3 class="p-1">{{ profile.user.first_name |title }}'s Classes</h3>
                         </div>
                         {% for course in courses %}
                             <div class="col-md-12 ftco-animate">
@@ -305,7 +308,7 @@
 
                    <div class="row bg-light mt-5">
                         <div class="bg-light mx-auto">
-                            <h3 class="p-1">{{ profile.user.first_name |title }} Venue's</h3>
+                            <h3 class="p-1">{{ profile.user.first_name |title }}'s Venues</h3>
                         </div>
                         {% for venue in venues %}
                             <div class="col-md-12 ftco-animate">

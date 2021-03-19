@@ -160,7 +160,7 @@
 						     </div>
 						   </div>
 						   <div class="job-post-item-body d-block d-md-flex">
-						     <div class="mr-3"><span class="icon-layers"></span> <a href="#">Google, Inc.</a></div>
+						     <div class="mr-3"><span class="icon-layers"></span> <a href="{% url 'pages:profile-info' course.author.id course.author.first_name  %}">{{ course.author.first_name }}</a></div>
 						     <div class="mr-3"><span class="icon-calendar-times-o"></span> {{ course.day}} {{ course.start_time }}</div>
 						     <div class="mr-3"><span class="icon-my_location"></span> <span>{{ course.course_level }} Level</span></div>
 						     <div><span class="icon-my_location"></span> <span>{{ course.location | capfirst }}, UK</span></div>
