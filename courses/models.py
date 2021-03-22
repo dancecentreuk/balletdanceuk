@@ -78,6 +78,17 @@ class WeeklyBalletClass(models.Model):
         ordering = ['-id']
 
 
+class CourseReview(models.Model):
+    course = models.ForeignKey(WeeklyBalletClass, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    comment = models.TextField(max_length=1000)
+    rating = models.FloatField(default=0)
+
+    def __str__(self):
+        return self.user.first_name
+
+
+
 
 
 

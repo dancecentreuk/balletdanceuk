@@ -7,9 +7,53 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, UpdateView, DetailView
-from .models import WeeklyBalletClass, Level
-from .forms import CreateCoursesForm, UpdateCourseForm
+from .models import WeeklyBalletClass, Level, CourseReview
+from .forms import CreateCoursesForm, UpdateCourseForm, CourseReviewForm
 from pages.choices import location_choices, course_level_choices, age_choices, day_choices
+
+
+
+def add_course_review(request):
+    pass
+
+@method_decorator(login_required(login_url='/'), name='dispatch')
+class CreateCourseReview(CreateView):
+    model = CourseReview
+    template_name = 'courses/create-course_review.html'
+    form_class = CourseReviewForm
+
+    def get(self, request, *args, **kwargs):
+        self.course = get_object_or_404(WeeklyBalletClass, pk=self.kwargs['pk'])
+        # if not request.user.is_authenticated:
+        #     messages.add_message(self.request, messages.WARNING, 'Cheeky not your message to update !!!')
+        #     return HttpResponseRedirect('/jobs/')
+        return super(CreateCourseReview, self).get(request, *args, **kwargs)
+
+
+
+    def form_valid(self, form):
+        course = get_object_or_404(WeeklyBalletClass, pk=self.kwargs['pk'])
+        form = form.save(commit=False)
+        form.user = self.request.user
+        form.course = course
+        form.save()
+        return super(CreateCourseReview, self).form_valid(form)
+
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(CreateCourseReview, self).get_context_data(*args, **kwargs)
+        self.course = get_object_or_404(WeeklyBalletClass, pk=self.kwargs['pk'])
+        context['course'] = self.course
+        return context
+
+
+    def get_success_url(self):
+        self.course = get_object_or_404(WeeklyBalletClass, pk=self.kwargs['pk'])
+        return reverse('courses:course-detail', kwargs={'pk': self.course.pk, 'slug': self.course.slug})
+
+
+
+
 
 
 
@@ -35,6 +79,8 @@ class SingleCourseView(DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(SingleCourseView, self).get_context_data(**kwargs)
         context['levels'] = Level.objects.all()
+        # course = get_object_or_404(CourseReview, course_id=self.kwargs['pk'])
+        context['ratings'] = CourseReview.objects.filter(course_id=self.kwargs['pk'])
         return context
 
 
@@ -77,6 +123,10 @@ class UpdateCourseView(SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('courses:course-detail', kwargs={'pk': self.object.pk, 'slug': self.object.slug})
+
+
+
+
 
 
 class CourseLevelDetailView(ListView):
@@ -135,4 +185,51 @@ def searchCourse(request):
     }
 
     return render(request, 'courses/search.html', context)
+
+
+
+
+@method_decorator(login_required(login_url='/'), name='dispatch')
+class UpdateCourseReview(UpdateView):
+    model = CourseReview
+    template_name = 'courses/create-course_review.html'
+    form_class = CourseReviewForm
+
+    def get(self, request, *args, **kwargs):
+        self.object = get_object_or_404(CourseReview, pk=self.kwargs['pk'])
+        if self.object.user != request.user:
+            messages.add_message(self.request, messages.WARNING, 'Cheeky not your Review to update !!!')
+            return HttpResponseRedirect('/')
+        return super(UpdateCourseReview, self).get(request, *args, **kwargs)
+
+
+
+    # def form_valid(self, form):
+    #     course = get_object_or_404(WeeklyBalletClass, pk=self.kwargs['pk'])
+    #     form = form.save(commit=False)
+    #     form.user = self.request.user
+    #     form.course = course
+    #     form.save()
+    #     return super(CreateCourseReview, self).form_valid(form)
+
+
+    def form_valid(self, form):
+        return super(UpdateCourseReview, self).form_valid(form)
+
+
+
+
+    # def get_context_data(self, *args, **kwargs):
+    #     context = super(CreateCourseReview, self).get_context_data(*args, **kwargs)
+    #     self.course = get_object_or_404(WeeklyBalletClass, pk=self.kwargs['pk'])
+    #     context['course'] = self.course
+    #     return context
+    #
+    #
+    def get_success_url(self):
+        dance_course = get_object_or_404(WeeklyBalletClass, pk=self.object.course.id)
+        return reverse('courses:course-detail', kwargs={'pk': dance_course.pk, 'slug': dance_course.slug})
+
+
+
 

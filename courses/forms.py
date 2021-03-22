@@ -23,3 +23,16 @@ class UpdateCourseForm(forms.ModelForm):
 
 
 
+
+class CourseReviewForm(forms.ModelForm):
+    class Meta:
+        model = CourseReview
+        fields = ['comment', 'rating']
+
+
+
+
+
+
+
+

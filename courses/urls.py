@@ -11,5 +11,7 @@ urlpatterns = [
     path('detail/<int:pk>/<slug:slug>/', SingleCourseView.as_view(), name='course-detail'),
     path('update/<int:pk>/<slug:slug>/', UpdateCourseView.as_view(), name='update-course'),
     path('search/', searchCourse, name='search-course'),
+    path('create-review/<int:pk>/', CreateCourseReview.as_view(), name='create-review'),
+    path('update-review/<int:pk>/', UpdateCourseReview.as_view(), name='update-review'),
 
 ]
