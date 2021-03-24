@@ -25,7 +25,8 @@
           {% if request.user.is_authenticated %}
 
 			     <form action="#" method="POST" class="p-5 bg-white" enctype="multipart/form-data">
-                 <h2>Write a Review about  {{ course.title }}</h2>
+                 <h2>Write a Review about :  </h2>
+                 <h5>{{ course.title }}</h5>
                  {% csrf_token %}
 
                  {% if form.errors %}
@@ -44,7 +45,16 @@
                      </div>
                      {% endif %}
 
-                          {{ form | crispy }}
+{#                     <label for="comment">Review</label>#}
+{#                     <input type="text" name="rating" class="form-control">#}
+{#                     <br>#}
+{#                     <label for="rating">Rating</label>#}
+{#                     <input type="range" id="rangeInput" name="rating"#}
+{#                     min="0" max="10" value="0"  step="0.5" oninput="amount.value=rangeInput.value">#}
+
+                 {{ form.as_p }}
+
+                 <output name="amount" id="amount" for="rangeInput"></output>
 
 
 
@@ -52,7 +62,7 @@
 
                  <div class="row form-group">
                 <div class="col-md-12">
-                  <input type="submit" value="Create Listing" class="btn btn-primary  py-2 px-5">
+                  <input type="submit" value="Post Review" class="btn btn-primary  py-2 px-5 float-right">
                 </div>
               </div>
 

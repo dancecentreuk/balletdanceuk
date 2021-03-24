@@ -73,13 +73,17 @@ class WeeklyBalletClass(models.Model):
             return self.timestamp
         return self.updated
 
+    def has_commented(self):
+        return self.ballet_classes.all().values()
+
+
 
     class Meta:
         ordering = ['-id']
 
 
 class CourseReview(models.Model):
-    course = models.ForeignKey(WeeklyBalletClass, on_delete=models.CASCADE)
+    course = models.ForeignKey(WeeklyBalletClass, on_delete=models.CASCADE, related_name='ballet_classes')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     comment = models.TextField(max_length=1000)
     rating = models.FloatField(default=0)

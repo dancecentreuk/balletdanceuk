@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, CreateView, UpdateView, DetailView
+from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView
 from .models import WeeklyBalletClass, Level, CourseReview
 from .forms import CreateCoursesForm, UpdateCourseForm, CourseReviewForm
 from pages.choices import location_choices, course_level_choices, age_choices, day_choices
@@ -24,9 +24,13 @@ class CreateCourseReview(CreateView):
 
     def get(self, request, *args, **kwargs):
         self.course = get_object_or_404(WeeklyBalletClass, pk=self.kwargs['pk'])
-        # if not request.user.is_authenticated:
-        #     messages.add_message(self.request, messages.WARNING, 'Cheeky not your message to update !!!')
-        #     return HttpResponseRedirect('/jobs/')
+
+        commenters = CourseReview.objects.filter(course_id=self.kwargs['pk'])
+        for commenter in commenters:
+            users=[commenter.user]
+            if request.user in users:
+                messages.add_message(self.request, messages.WARNING, 'Cheeky you have allready reviewed this class')
+                return HttpResponseRedirect('/courses/')
         return super(CreateCourseReview, self).get(request, *args, **kwargs)
 
 
@@ -76,11 +80,21 @@ class SingleCourseView(DetailView):
     model = WeeklyBalletClass
     context_object_name = 'course'
 
+
+
+
+
     def get_context_data(self, *args, **kwargs):
         context = super(SingleCourseView, self).get_context_data(**kwargs)
         context['levels'] = Level.objects.all()
-        # course = get_object_or_404(CourseReview, course_id=self.kwargs['pk'])
         context['ratings'] = CourseReview.objects.filter(course_id=self.kwargs['pk'])
+        commenters= CourseReview.objects.filter(course_id=self.kwargs['pk'])
+
+        users=[]
+        for commenter in commenters:
+            users.append(commenter.user)
+        context['commenters'] = users
+
         return context
 
 
@@ -125,6 +139,30 @@ class UpdateCourseView(SuccessMessageMixin, UpdateView):
         return reverse('courses:course-detail', kwargs={'pk': self.object.pk, 'slug': self.object.slug})
 
 
+@method_decorator(login_required(login_url='/'), name='dispatch')
+class DeleteCourseView(SuccessMessageMixin, DeleteView):
+    model = WeeklyBalletClass
+    context_object_name = 'course'
+    template_name = 'courses/delete-course.html'
+
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.author != self.request.user:
+            messages.add_message(self.request, messages.WARNING, 'Cheeky not your dance class to delete !!!')
+            return HttpResponseRedirect(reverse('courses:course-detail', kwargs={'pk': self.object.pk, 'slug': self.object.slug}))
+        return super(DeleteCourseView, self).get(request, *args, **kwargs)
+
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.author == self.request.user:
+            self.object.delete()
+            messages.add_message(self.request, messages.SUCCESS, 'Your course  has been deleted !!!')
+            return HttpResponseRedirect('/courses/')
+        else:
+            messages.add_message(self.request, messages.WARNING, 'Cheeky not your review  to delete !!!')
+            return HttpResponseRedirect('/courses/')
 
 
 
@@ -199,18 +237,10 @@ class UpdateCourseReview(UpdateView):
         self.object = get_object_or_404(CourseReview, pk=self.kwargs['pk'])
         if self.object.user != request.user:
             messages.add_message(self.request, messages.WARNING, 'Cheeky not your Review to update !!!')
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/courses/')
         return super(UpdateCourseReview, self).get(request, *args, **kwargs)
 
 
-
-    # def form_valid(self, form):
-    #     course = get_object_or_404(WeeklyBalletClass, pk=self.kwargs['pk'])
-    #     form = form.save(commit=False)
-    #     form.user = self.request.user
-    #     form.course = course
-    #     form.save()
-    #     return super(CreateCourseReview, self).form_valid(form)
 
 
     def form_valid(self, form):
@@ -219,13 +249,6 @@ class UpdateCourseReview(UpdateView):
 
 
 
-    # def get_context_data(self, *args, **kwargs):
-    #     context = super(CreateCourseReview, self).get_context_data(*args, **kwargs)
-    #     self.course = get_object_or_404(WeeklyBalletClass, pk=self.kwargs['pk'])
-    #     context['course'] = self.course
-    #     return context
-    #
-    #
     def get_success_url(self):
         dance_course = get_object_or_404(WeeklyBalletClass, pk=self.object.course.id)
         return reverse('courses:course-detail', kwargs={'pk': dance_course.pk, 'slug': dance_course.slug})
@@ -233,3 +256,27 @@ class UpdateCourseReview(UpdateView):
 
 
 
+@method_decorator(login_required(login_url='/'), name='dispatch')
+class DeleteReviewView(SuccessMessageMixin, DeleteView):
+    model = CourseReview
+    context_object_name = 'review'
+    template_name = 'courses/delete-course-review.html'
+
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.user != self.request.user:
+            messages.add_message(self.request, messages.WARNING, 'Cheeky not your review to delete !!!')
+            return HttpResponseRedirect(reverse('courses:course-detail', kwargs={'pk': self.object.course.pk, 'slug': self.object.course.slug}))
+        return super(DeleteReviewView, self).get(request, *args, **kwargs)
+
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.user == self.request.user:
+            self.object.delete()
+            messages.add_message(self.request, messages.SUCCESS, 'Your review  has been deleted !!!')
+            return HttpResponseRedirect(reverse('courses:course-detail', kwargs={'pk': self.object.course.pk, 'slug': self.object.course.slug}))
+        else:
+            messages.add_message(self.request, messages.WARNING, 'Cheeky not your review  to delete !!!')
+            return HttpResponseRedirect(reverse('courses:course-detail', kwargs={'pk': self.object.course.pk, 'slug': self.object.course.slug}))

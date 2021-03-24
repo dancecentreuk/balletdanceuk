@@ -166,11 +166,12 @@
               {% if request.user == course.author %}
 
               <div class="tag-widget post-tag-container mb-5 mt-5">
-                  <a href="" class="btn btn-danger btn-sm py-1 mr-1">Delete</a>
+                  <a href="{% url 'courses:delete-course' course.pk course.slug %}" class="btn btn-danger btn-sm py-1 mr-1">Delete</a>
                   <a href="{% url 'courses:update-course' course.pk course.slug %}" class="btn btn-primary btn-sm py-1 mr-1">Update</a>
               </div>
 
               {% endif %}
+
 
 
 
@@ -183,10 +184,21 @@
                                     <div class="col-6">
                                         <h4 class="card-title">Reviews</h4>
                                     </div>
-                                    <div class="col-6">
-                                        <a href="{% url 'courses:create-review' course.pk  %}" class="btn btn-outline-info btn-block float-left py-0">Create Review</a>
-                                    </div>
+                                    {% if request.user not in commenters %}
+                                        <div class="col-6">
+                                            <a href="{% url 'courses:create-review' course.pk  %}" class="btn btn-outline-info float-right py-0">Write Review</a>
+                                        </div>
+
+                                    {% else %}
+                                        <div class="col-6">
+                                        <p class="text-sm float-right">You have written a  review</p>
+                                        </div>
+                                    {% endif %}
                                 </div>
+
+
+
+
 
 
                                     {%  for rating in ratings %}
@@ -202,15 +214,20 @@
                                             </div>
                                             <div class="col-md-9">
                                                 <p>{{ rating.comment }}</p>
-                                                <div class="row">
-                                                    <div class="col-6"></div>
-                                                    <div class="col-6">
-                                                        <a href="{% url 'courses:update-review' rating.pk  %}" class="btn btn-outline-info btn-block float-left py-0">Update Review</a>
-                                                    </div>
-                                                </div>
                                             </div>
 
                                         </div>
+                                          {% if request.user == rating.user %}
+                                          <div class="row">
+
+                                                    <div class="col-12">
+                                                        <a href="{% url 'courses:delete-review' rating.pk  %}" class=" btn btn-outline-danger btn-sm py-0 float-right">Delete Review</a>
+                                                        <a href="{% url 'courses:update-review' rating.pk  %}" class=" btn btn-outline-info btn-sm py-0 mr-2 float-right">Update Review</a>
+
+                                                    </div>
+
+                                                </div>
+                                          {% endif %}
                                       </div>
                                     </div>
 

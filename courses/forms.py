@@ -1,3 +1,4 @@
+import form as form
 from django import forms
 from .models import *
 
@@ -29,7 +30,18 @@ class CourseReviewForm(forms.ModelForm):
         model = CourseReview
         fields = ['comment', 'rating']
 
+        labels = {
+            'comment': ('Review'),
+            'rating': ('Rating out of 10'),
+        }
 
+        widgets = {
+            'comment': forms.Textarea(attrs={'class': 'form-control', 'label': 'review'}),
+            'rating': forms.TextInput(attrs={ 'type':'range', 'id' :'rangeInput',
+                                             'min':'0', 'max':'10', 'step':'0.5', 'oninput': 'amount.value=rangeInput.value',
+                                             }),
+
+        }
 
 
 
