@@ -39,7 +39,12 @@
                                         Class Rating
                                     </div>
                                     <div class="col-4">
-                                        <h5 class="text-right text-info">9.5/10 </h5>
+                                        <h5 class="text-right text-info">
+                                            {% if average %}
+                                            {{ average }}/10 </h5>
+                                        {% else %}
+                                        Not Rated
+                                        {% endif %}
                                     </div>
                                 </div>
 
@@ -184,6 +189,7 @@
                                     <div class="col-6">
                                         <h4 class="card-title">Reviews</h4>
                                     </div>
+                                {% if request.user != course.author %}
                                     {% if request.user not in commenters %}
                                         <div class="col-6">
                                             <a href="{% url 'courses:create-review' course.pk  %}" class="btn btn-outline-info float-right py-0">Write Review</a>
@@ -194,6 +200,7 @@
                                         <p class="text-sm float-right">You have written a  review</p>
                                         </div>
                                     {% endif %}
+                                {% endif %}
                                 </div>
 
 

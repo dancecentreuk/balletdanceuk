@@ -10,13 +10,11 @@ from django.views.generic import ListView, CreateView, UpdateView, DetailView, D
 from .models import WeeklyBalletClass, Level, CourseReview
 from .forms import CreateCoursesForm, UpdateCourseForm, CourseReviewForm
 from pages.choices import location_choices, course_level_choices, age_choices, day_choices
+from django.db.models import Avg
 
 
 
-def add_course_review(request):
-    pass
-
-@method_decorator(login_required(login_url='/'), name='dispatch')
+@method_decorator(login_required(login_url='/users/login'), name='dispatch')
 class CreateCourseReview(CreateView):
     model = CourseReview
     template_name = 'courses/create-course_review.html'
@@ -24,6 +22,12 @@ class CreateCourseReview(CreateView):
 
     def get(self, request, *args, **kwargs):
         self.course = get_object_or_404(WeeklyBalletClass, pk=self.kwargs['pk'])
+
+
+
+        if request.user == self.course.author:
+            messages.add_message(self.request, messages.WARNING, 'You cant give your self a  review')
+            return HttpResponseRedirect( reverse('courses:course-detail', kwargs={'pk': self.course.pk, 'slug': self.course.slug}))
 
         commenters = CourseReview.objects.filter(course_id=self.kwargs['pk'])
         for commenter in commenters:
@@ -81,12 +85,24 @@ class SingleCourseView(DetailView):
     context_object_name = 'course'
 
 
+    def get(self, request, *args, **kwargs):
+        ratings = CourseReview.objects.filter(course_id=self.kwargs['pk'])
+        average = ratings.aggregate(Avg('rating'))['rating__avg']
+        if average is not None:
+            print(round(average, 2))
+        return super(SingleCourseView, self).get(request, *args, **kwargs)
+
+
 
 
 
     def get_context_data(self, *args, **kwargs):
         context = super(SingleCourseView, self).get_context_data(**kwargs)
         context['levels'] = Level.objects.all()
+        ratings = CourseReview.objects.filter(course_id=self.kwargs['pk'])
+        average = ratings.aggregate(Avg('rating'))['rating__avg']
+        if average is not None:
+            context['average'] = (round(average, 1))
         context['ratings'] = CourseReview.objects.filter(course_id=self.kwargs['pk'])
         commenters= CourseReview.objects.filter(course_id=self.kwargs['pk'])
 
