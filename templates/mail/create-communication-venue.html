@@ -22,13 +22,12 @@
 
 
 
-
-
           {% if request.user.is_authenticated %}
 
 			     <form action="#" method="POST" class="p-5 bg-white">
                  <h2>Write Message ...</h2>
-                 <p>{{ talent.user.first_name }}</p>
+                 <h4>To: {{ venue.author.first_name }}</h4>
+                 <h5>Subject: {{ venue.name }}</h5>
                  {% csrf_token %}
 
                  {% if form.errors %}
@@ -48,12 +47,6 @@
                      {% endif %}
 
                           {{ form | crispy }}
-
-
-
-
-
-
 
 
                  <div class="row form-group">

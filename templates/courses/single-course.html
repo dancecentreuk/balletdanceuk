@@ -28,6 +28,13 @@
                                 <div class="row">
                                     <img src="{{ course.dance_class_image.url }}" class="card-img" alt="..." style="max-height: 25rem">
                                 </div>
+                                {% if course.author != request.user %}
+                                <div class="row pt-1">
+                                    <a href="{% url 'mail:create-course-communication'  course.author.pk course.pk %}"
+                                       class=" btn btn-outline-info btn-sm btn-block">MESSAGE {{ course.author.first_name | upper }}</a>
+
+                                </div>
+                                {% endif %}
 
 
                             </div>
@@ -240,11 +247,6 @@
 
                                     {% endfor %}
 
-
-
-
-
-
                                 </div>
                             </div>
                         </div>
@@ -272,17 +274,8 @@
 
 
             <div class="sidebar-box ftco-animate">
-              <h3>Tag Cloud</h3>
-              <div class="tagcloud">
-                <a href="#" class="tag-cloud-link">dish</a>
-                <a href="#" class="tag-cloud-link">menu</a>
-                <a href="#" class="tag-cloud-link">food</a>
-                <a href="#" class="tag-cloud-link">sweet</a>
-                <a href="#" class="tag-cloud-link">tasty</a>
-                <a href="#" class="tag-cloud-link">delicious</a>
-                <a href="#" class="tag-cloud-link">desserts</a>
-                <a href="#" class="tag-cloud-link">drinks</a>
-              </div>
+              <h3>Promo</h3>
+
             </div>
 
 

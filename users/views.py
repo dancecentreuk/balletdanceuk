@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import CreateView, UpdateView, DetailView
+from django.views.generic import CreateView, UpdateView, DetailView, DeleteView
 from .models import Profile, DancersProfile, Account, CompanyProfile, DancerImage
 from jobs.models import Listing
 from courses.models import WeeklyBalletClass
@@ -221,6 +221,55 @@ class CreateDancerProfileView(CreateView):
 
     def get_success_url(self):
         return reverse('users:profile', kwargs={'pk': self.request.user.id})
+
+
+class DeleteDancersProfile(DeleteView):
+    model = DancersProfile
+    success_url = '/'
+    template_name = 'users/delete-dancers-profile.html'
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.user != self.request.user:
+            messages.add_message(self.request, messages.WARNING, 'Cheeky not your profile to Delete !!!')
+            return HttpResponseRedirect('/')
+        return super(DeleteDancersProfile, self).get(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.user == self.request.user:
+            self.object.delete()
+            messages.add_message(self.request, messages.SUCCESS, 'Your dancers profile has been deleted !!!')
+            return HttpResponseRedirect(self.success_url)
+        else:
+            messages.add_message(self.request, messages.WARNING, 'Error: We were unable to delete Dancers Profile !!!')
+            return HttpResponseRedirect(self.success_url)
+
+
+
+
+
+    class DeleteListingView(SuccessMessageMixin, DeleteView):
+        model = Listing
+        success_url = '/'
+        template_name = 'jobs/delete-listing.html'
+
+        def get(self, request, *args, **kwargs):
+            self.object = self.get_object()
+            if self.object.author != self.request.user:
+                messages.add_message(self.request, messages.WARNING, 'Cheeky not your message to update !!!')
+                return HttpResponseRedirect('/jobs/')
+            return super(DeleteListingView, self).get(request, *args, **kwargs)
+
+        def delete(self, request, *args, **kwargs):
+            self.object = self.get_object()
+            if self.object.author == self.request.user:
+                self.object.delete()
+                messages.add_message(self.request, messages.SUCCESS, 'Your message has been deleted !!!')
+                return HttpResponseRedirect(self.success_url)
+            else:
+                messages.add_message(self.request, messages.WARNING, 'Cheeky not your message to delete !!!')
+                return HttpResponseRedirect(self.success_url)
 
 
 class CreateCompanyProfileView(CreateView):

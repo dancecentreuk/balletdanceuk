@@ -5,9 +5,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
 from .models import *
+from courses.models import WeeklyBalletClass
+from venues.models import Venue
 from jobs.models import Listing
-from .forms import CreateCommunicationForm,  HideConversationForm
-from users.models import Account, DancersProfile
+from .forms import CreateCommunicationForm,  HideConversationForm, NewComsForm
+from users.models import Account, DancersProfile, Profile
 from django.db.models import Q
 
 # Create your views here.
@@ -211,9 +213,12 @@ def hide_conversation(request, pk):
 
 class CreateTalentCommunication(CreateView):
     model = DancersProfile
-    template_name = 'mail/create-communication.html'
+    template_name = 'mail/create-communication-talent.html'
     form_class = CreateCommunicationForm
+    context_object_name = 'talent'
     success_url = '/'
+
+
 
 
 
@@ -231,5 +236,136 @@ class CreateTalentCommunication(CreateView):
 
     def get_success_url(self):
         return reverse('users:profile', kwargs={'pk': self.request.user.id})
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateTalentCommunication, self).get_context_data(**kwargs)
+        talent = get_object_or_404(DancersProfile, pk=self.kwargs['pk'])
+        context['talent'] = talent
+        return context
+
+
+
+# class CreateMainCommunication(CreateView):
+#     model = Account
+#     template_name = 'mail/create-communication.html'
+#     form_class = NewComsForm
+#     success_url = '/'
+#
+#
+#
+#     def form_valid(self, form):
+#
+#
+#         user = get_object_or_404(Account, pk=self.kwargs['pk'])
+#         communication = form.save(commit=False)
+#         communication.sender = self.request.user
+#         communication.recipient = user
+#         title = form.cleaned_data['title']
+#         # title = 'Message from ' + self.request.user.first_name
+#         conversation = Conversation.objects.create(title=title, messenger_1=communication.sender, messenger_2=communication.recipient)
+#         communication.conversation_id = conversation.id
+#         communication.save()
+#         print(form)
+#         return super(CreateMainCommunication, self).form_valid(form)
+#
+#
+#     def get_success_url(self):
+#         return reverse('users:profile', kwargs={'pk': self.request.user.id})
+#
+
+class CreateCourseCommunication(CreateView):
+    model = Account
+    template_name = 'mail/create-course-communication.html'
+    form_class = CreateCommunicationForm
+    success_url = '/'
+
+
+
+    def form_valid(self, form):
+        user = get_object_or_404(Account, pk=self.kwargs['pk'])
+        communication = form.save(commit=False)
+        communication.sender = self.request.user
+        communication.recipient = user
+        course = get_object_or_404(WeeklyBalletClass, pk=self.kwargs['course_id'])
+        title = 'Message from ' + self.request.user.first_name + ' about ' + course.title
+        conversation = Conversation.objects.create(title=title, messenger_1=communication.sender, messenger_2=communication.recipient)
+        communication.conversation_id = conversation.id
+        communication.save()
+        return super(CreateCourseCommunication, self).form_valid(form)
+
+
+    def get_success_url(self):
+        return reverse('users:profile', kwargs={'pk': self.request.user.id})
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateCourseCommunication, self).get_context_data(**kwargs)
+        course = get_object_or_404(WeeklyBalletClass, pk=self.kwargs['course_id'])
+        context['course'] = course
+        return context
+
+
+class CreateCommunicationJob(CreateView):
+    model = Listing
+    template_name = 'mail/create-communication-job.html'
+    form_class = CreateCommunicationForm
+    success_url = '/'
+
+
+
+
+    def form_valid(self, form):
+        listing = get_object_or_404(Listing, pk=self.kwargs['pk'])
+        communication = form.save(commit=False)
+        communication.sender = self.request.user
+        communication.recipient = listing.author
+        title = 'Message from ' + self.request.user.first_name + ' about ' + listing.title
+        conversation = Conversation.objects.create(title=title, messenger_1=communication.sender, messenger_2=communication.recipient)
+        communication.conversation_id = conversation.id
+        communication.save()
+        return super(CreateCommunicationJob, self).form_valid(form)
+
+
+    def get_success_url(self):
+        return reverse('users:profile', kwargs={'pk': self.request.user.id})
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateCommunicationJob, self).get_context_data(**kwargs)
+        listing = get_object_or_404(Listing, pk=self.kwargs['pk'])
+        context['listing'] = listing
+
+        return context
+
+
+class CreateCommunicationVenue(CreateView):
+    model = Venue
+    template_name = 'mail/create-communication-venue.html'
+    form_class = CreateCommunicationForm
+    success_url = '/'
+
+
+
+
+    def form_valid(self, form):
+        venue = get_object_or_404(Venue, pk=self.kwargs['pk'])
+        communication = form.save(commit=False)
+        communication.sender = self.request.user
+        communication.recipient = venue.author
+        title = 'Message from ' + self.request.user.first_name + ' about ' + venue.name
+        conversation = Conversation.objects.create(title=title, messenger_1=communication.sender, messenger_2=communication.recipient)
+        communication.conversation_id = conversation.id
+        communication.save()
+        return super(CreateCommunicationVenue, self).form_valid(form)
+
+
+    def get_success_url(self):
+        return reverse('users:profile', kwargs={'pk': self.request.user.id})
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateCommunicationVenue, self).get_context_data(**kwargs)
+        venue = get_object_or_404(Venue, pk=self.kwargs['pk'])
+        context['venue'] = venue
+
+        return context
+
 
 

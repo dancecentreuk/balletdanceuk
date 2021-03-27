@@ -22,13 +22,11 @@
 
 
 
-
-
           {% if request.user.is_authenticated %}
 
 			     <form action="#" method="POST" class="p-5 bg-white">
                  <h2>Write Message ...</h2>
-                 <p>{{ talent.user.first_name }}</p>
+                 <h4>To: {{ talent.user.first_name }}</h4>
                  {% csrf_token %}
 
                  {% if form.errors %}
@@ -50,12 +48,6 @@
                           {{ form | crispy }}
 
 
-
-
-
-
-
-
                  <div class="row form-group">
                 <div class="col-md-12">
                   <input type="submit" value="Send Message" class="btn btn-primary  py-2 px-5">
@@ -69,7 +61,7 @@
 
           {% else %}
 
-              <h3 class="text-center text-dark">You need to be logged in to create a  listing ps login or register a new account !!</h3>
+              <h3 class="text-center text-dark">You need to be send a  message ps login or register a new account !!</h3>
 
           {% endif %}
           </div>

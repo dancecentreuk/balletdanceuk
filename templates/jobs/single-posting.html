@@ -74,8 +74,15 @@
 
 
 
+
+
  {% if request.user != listing.author %}
-              <a href="{% url 'mail:create-communication' listing.pk %}" class="float-right btn btn-outline-info btn-sm py-1 mr-1">Make Enquiry</a>
+      <div class="row">
+                           <div class="col-12 mt-2">
+                               <a href="{% url 'mail:create-communication-job'  listing.pk %}" class="float-right btn btn-outline-info btn-sm">Make Enquiry</a>
+                           </div>
+
+                       </div>
           {% endif %}
 
 

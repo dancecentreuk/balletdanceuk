@@ -30,6 +30,13 @@
                                 <div class="row">
                                     <img src="{{ venue.venue_image.url }}" class="card-img" alt="..." style="max-height: 25rem">
                                 </div>
+                            <div class="row">
+                                <div class="col-12 pt-1">
+                                    <a href="{% url 'mail:create-communication-venue' venue.pk %}" class="btn btn-outline-info btn-block">
+                                        Message Venue
+                                    </a>
+                                </div>
+                            </div>
                                 <div class="row">
                                     <div class="tag-widget post-tag-container mb-1 mt-2">
               <div class="tagcloud">

@@ -10,7 +10,9 @@ urlpatterns = [
     path('update/<int:pk>', UserUpdateView.as_view(), name='update-profile'),
     path('profile/<int:pk>/', ProfileView.as_view(), name='profile'),
     path('create_dancers_profile/', CreateDancerProfileView.as_view(), name='create-dancers-profile'),
+    path('delete-dancers-profile/<int:pk>/', DeleteDancersProfile.as_view(), name='delete-dancers-profile'),
     path('create_company_profile/', CreateCompanyProfileView.as_view(), name='create-company-profile'),
-    path('delete-photo/<int:pk>/', delete_dancer_photo, name='delete-dancers-photo')
+    path('delete-photo/<int:pk>/', delete_dancer_photo, name='delete-dancers-photo'),
+
 
 ]

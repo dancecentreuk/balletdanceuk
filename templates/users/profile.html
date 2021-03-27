@@ -117,6 +117,7 @@
                                     <i type="button" style="font-size: 15px;" class="ml-2 text-danger fas fa-pen"
                                        data-toggle="modal" data-target="#locationModal"> </i>
                                 </button>
+                                <a href="{% url 'users:delete-dancers-profile' candidate.dancers_profile.pk %}" class="btn btn-outline-danger btn-sm btn-block mt-3">Delete Dancer Profile </a>
                             </div>
                             <div class="desc">
                                 <h3>Dancers Profile</h3>
@@ -213,17 +214,11 @@
                                     <div class="mb-4 mb-md-0 mr-5">
                                         <div class="job-post-item-header d-flex align-items-center">
                                             <h2 class="mr-3 text-black h4">{{ listing.title }}</h2>
-                                            {#						     <div class="badge-wrap">#}
-                                            {#                                 {% if course.age_group == 'toddlers' %}#}
-                                            {#                                     <span class="bg-warning text-white badge py-2 px-3">Toddlers</span>#}
-                                            {#                                 {% elif course.age_group == 'children' %}#}
-                                            {#                                     <span class="bg-primary text-white badge py-2 px-3">Children</span>#}
-                                            {#                                 {% elif course.age_group == 'teens' %}#}
-                                            {#                                     <span class="bg-secondary text-white badge py-2 px-3">Teen</span>#}
-                                            {#                                 {% elif course.age_group == 'adults' %}#}
-                                            {#                                     <span class="bg-danger text-white badge py-2 px-3">Adults</span>#}
-                                            {#                                 {% endif %}#}
-                                            {#						     </div>#}
+                                             <div class="badge-wrap">
+                                   {% if listing.is_posting == False %}
+                                       <span class="bg-warning text-white badge py-2 px-3">Dated</span>
+                                   {% endif %}
+                               </div>
                                         </div>
                                         <div class="job-post-item-body d-block d-md-flex">
                                             <div class="mr-3"><span class="icon-layers"></span> <a
@@ -236,8 +231,13 @@
                                     </div>
 
                                     <div class="ml-auto d-flex">
-                                        <a href="{% url 'jobs:single-listing' listing.slug listing.pk %}"
+                                        {% if listing.is_posting %}
+                                            <a href="{% url 'jobs:single-listing' listing.slug listing.pk %}"
                                            class="btn btn-primary py-2 mr-1">View</a>
+                                        {% else %}
+                                        <a href="{% url 'jobs:single-posting' listing.slug listing.pk %}"
+                                           class="btn btn-primary py-2 mr-1">View</a>
+                                        {% endif %}
                                         <a href="#"
                                            class="btn btn-danger rounded-circle btn-favorite d-flex align-items-center">
                                             <span class="icon-heart"></span>

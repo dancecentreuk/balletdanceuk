@@ -14,50 +14,7 @@ from django.db.models import Avg
 
 
 
-@method_decorator(login_required(login_url='/users/login'), name='dispatch')
-class CreateCourseReview(CreateView):
-    model = CourseReview
-    template_name = 'courses/create-course_review.html'
-    form_class = CourseReviewForm
 
-    def get(self, request, *args, **kwargs):
-        self.course = get_object_or_404(WeeklyBalletClass, pk=self.kwargs['pk'])
-
-
-
-        if request.user == self.course.author:
-            messages.add_message(self.request, messages.WARNING, 'You cant give your self a  review')
-            return HttpResponseRedirect( reverse('courses:course-detail', kwargs={'pk': self.course.pk, 'slug': self.course.slug}))
-
-        commenters = CourseReview.objects.filter(course_id=self.kwargs['pk'])
-        for commenter in commenters:
-            users=[commenter.user]
-            if request.user in users:
-                messages.add_message(self.request, messages.WARNING, 'Cheeky you have allready reviewed this class')
-                return HttpResponseRedirect('/courses/')
-        return super(CreateCourseReview, self).get(request, *args, **kwargs)
-
-
-
-    def form_valid(self, form):
-        course = get_object_or_404(WeeklyBalletClass, pk=self.kwargs['pk'])
-        form = form.save(commit=False)
-        form.user = self.request.user
-        form.course = course
-        form.save()
-        return super(CreateCourseReview, self).form_valid(form)
-
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(CreateCourseReview, self).get_context_data(*args, **kwargs)
-        self.course = get_object_or_404(WeeklyBalletClass, pk=self.kwargs['pk'])
-        context['course'] = self.course
-        return context
-
-
-    def get_success_url(self):
-        self.course = get_object_or_404(WeeklyBalletClass, pk=self.kwargs['pk'])
-        return reverse('courses:course-detail', kwargs={'pk': self.course.pk, 'slug': self.course.slug})
 
 
 
@@ -83,14 +40,6 @@ class SingleCourseView(DetailView):
     template_name = 'courses/single-course.html'
     model = WeeklyBalletClass
     context_object_name = 'course'
-
-
-    def get(self, request, *args, **kwargs):
-        ratings = CourseReview.objects.filter(course_id=self.kwargs['pk'])
-        average = ratings.aggregate(Avg('rating'))['rating__avg']
-        if average is not None:
-            print(round(average, 2))
-        return super(SingleCourseView, self).get(request, *args, **kwargs)
 
 
 
@@ -241,6 +190,51 @@ def searchCourse(request):
     return render(request, 'courses/search.html', context)
 
 
+
+@method_decorator(login_required(login_url='/users/login'), name='dispatch')
+class CreateCourseReview(CreateView):
+    model = CourseReview
+    template_name = 'courses/create-course_review.html'
+    form_class = CourseReviewForm
+
+    def get(self, request, *args, **kwargs):
+        self.course = get_object_or_404(WeeklyBalletClass, pk=self.kwargs['pk'])
+
+
+
+        if request.user == self.course.author:
+            messages.add_message(self.request, messages.WARNING, 'You cant give your self a  review')
+            return HttpResponseRedirect(reverse('courses:course-detail', kwargs={'pk': self.course.pk, 'slug': self.course.slug}))
+
+        commenters = CourseReview.objects.filter(course_id=self.kwargs['pk'])
+        for commenter in commenters:
+            users = [commenter.user]
+            if request.user in users:
+                messages.add_message(self.request, messages.WARNING, 'Cheeky you have allready reviewed this class')
+                return HttpResponseRedirect('/courses/')
+        return super(CreateCourseReview, self).get(request, *args, **kwargs)
+
+
+
+    def form_valid(self, form):
+        course = get_object_or_404(WeeklyBalletClass, pk=self.kwargs['pk'])
+        form = form.save(commit=False)
+        form.user = self.request.user
+        form.course = course
+        form.save()
+        return super(CreateCourseReview, self).form_valid(form)
+
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(CreateCourseReview, self).get_context_data(*args, **kwargs)
+        self.course = get_object_or_404(WeeklyBalletClass, pk=self.kwargs['pk'])
+        context['course'] = self.course
+        return context
+
+
+    def get_success_url(self):
+        self.course = get_object_or_404(WeeklyBalletClass, pk=self.kwargs['pk'])
+        return reverse('courses:course-detail', kwargs={'pk': self.course.pk, 'slug': self.course.slug})
 
 
 @method_decorator(login_required(login_url='/'), name='dispatch')

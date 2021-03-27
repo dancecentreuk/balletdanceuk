@@ -5,7 +5,20 @@ from .models import *
 class CreateCommunicationForm(forms.ModelForm):
     class Meta:
         model = Communication
-        fields = ['content', ]
+        fields = ['content']
+
+
+
+
+
+class NewComsForm(CreateCommunicationForm):
+
+    title = forms.CharField(widget=forms.HiddenInput())
+
+    class Meta(CreateCommunicationForm.Meta):
+        fields = CreateCommunicationForm.Meta.fields + ['title']
+
+
 
 
 class HideConversationForm(forms.ModelForm):
