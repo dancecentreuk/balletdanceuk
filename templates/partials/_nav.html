@@ -7,8 +7,19 @@
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item active"><a href="{% url 'pages:home' %}" class="nav-link">Home</a></li>
-	          <li class="nav-item"><a href="{% url 'courses:courses' %}" class="nav-link">Classes</a></li>
+	          <li
+              {% if ' ' in request.path %}
+                          class="nav-item active"
+                      {% else %}
+                          class="nav-item"
+                      {% endif %}><a href="{% url 'pages:home' %}" class="nav-link">Home</a></li>
+	          <li
+                  {% if 'courses' in request.path %}
+                      class="nav-item active"
+                  {% else %}
+                      class="nav-item"
+                  {% endif %}
+                      ><a href="{% url 'courses:courses' %}" class="nav-link">Classes</a></li>
                 <li class="btn-group" style="margin-top: 10px">
                     <button type="button" class="btn btn-sadie-outline  dropdown-toggle nav-link-2" style="height: 35px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Jobs
@@ -18,9 +29,26 @@
                         <a class="dropdown-item" href="{% url 'jobs:postings' %}">Specific Date Jobs</a>
                       </div>
                 </li>
-	          <li class="nav-item"><a href="{% url 'pages:talent' %}" class="nav-link">Talent</a></li>
-	          <li class="nav-item"><a href="{% url 'venues:venues' %}" class="nav-link">Venues</a></li>
-	          <li class="nav-item"><a href="{% url 'blog:blog-listing' %}" class="nav-link">Blog</a></li>
+                <li
+                    {% if 'talent' in request.path %}
+                      class="nav-item active"
+                    {% else %}
+                      class="nav-item"
+                    {% endif %}
+              ><a href="{% url 'pages:talent' %}" class="nav-link">Talent</a></li>
+	          <li
+                      {% if 'venues' in request.path %}
+                          class="nav-item active"
+                      {% else %}
+                          class="nav-item"
+                      {% endif %}><a href="{% url 'venues:venues' %}" class="nav-link">Venues</a></li>
+	          <li
+                      {% if 'blog' in request.path %}
+                          class="nav-item active"
+                      {% else %}
+                          class="nav-item"
+                      {% endif %}
+              ><a href="{% url 'blog:blog-listing' %}" class="nav-link">Blog</a></li>
                 {% if  user.is_authenticated %}<!-- Example single danger button -->
                         <div class="btn-group" style="margin-top: 10px">
                           <button type="button" class="btn btn-danger dropdown-toggle" style="height: 35px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

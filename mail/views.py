@@ -133,14 +133,14 @@ class CreateCommunication(CreateView):
         communication = form.save(commit=False)
         communication.sender = self.request.user
         communication.recipient = listing.author
-        conversation = Conversation.objects.create(title=listing.title, messenger_1=communication.sender, messenger_2=communication.recipient)
+        conversation = Conversation.objects.create(title=listing.title, category='jobs', messenger_1=communication.sender, messenger_2=communication.recipient)
         communication.conversation_id = conversation.id
         communication.save()
         return super(CreateCommunication, self).form_valid(form)
 
 
     def get_success_url(self):
-        return reverse('users:profile', kwargs={'pk': self.request.user.id})
+        return reverse('mail:outbox')
 
 
 def hide_conversation(request, pk):
@@ -228,14 +228,14 @@ class CreateTalentCommunication(CreateView):
         communication.sender = self.request.user
         communication.recipient = talent.user
         title = 'Message from ' + self.request.user.first_name
-        conversation = Conversation.objects.create(title=title, messenger_1=communication.sender, messenger_2=communication.recipient)
+        conversation = Conversation.objects.create(title=title, category='talent', messenger_1=communication.sender, messenger_2=communication.recipient)
         communication.conversation_id = conversation.id
         communication.save()
         return super(CreateTalentCommunication, self).form_valid(form)
 
 
     def get_success_url(self):
-        return reverse('users:profile', kwargs={'pk': self.request.user.id})
+        return reverse('mail:outbox')
 
     def get_context_data(self, **kwargs):
         context = super(CreateTalentCommunication, self).get_context_data(**kwargs)
@@ -288,14 +288,14 @@ class CreateCourseCommunication(CreateView):
         communication.recipient = user
         course = get_object_or_404(WeeklyBalletClass, pk=self.kwargs['course_id'])
         title = 'Message from ' + self.request.user.first_name + ' about ' + course.title
-        conversation = Conversation.objects.create(title=title, messenger_1=communication.sender, messenger_2=communication.recipient)
+        conversation = Conversation.objects.create(title=title, category='course',  messenger_1=communication.sender, messenger_2=communication.recipient)
         communication.conversation_id = conversation.id
         communication.save()
         return super(CreateCourseCommunication, self).form_valid(form)
 
 
     def get_success_url(self):
-        return reverse('users:profile', kwargs={'pk': self.request.user.id})
+        return reverse('mail:outbox')
 
     def get_context_data(self, **kwargs):
         context = super(CreateCourseCommunication, self).get_context_data(**kwargs)
@@ -319,14 +319,14 @@ class CreateCommunicationJob(CreateView):
         communication.sender = self.request.user
         communication.recipient = listing.author
         title = 'Message from ' + self.request.user.first_name + ' about ' + listing.title
-        conversation = Conversation.objects.create(title=title, messenger_1=communication.sender, messenger_2=communication.recipient)
+        conversation = Conversation.objects.create(title=title, category='jobs',  messenger_1=communication.sender, messenger_2=communication.recipient)
         communication.conversation_id = conversation.id
         communication.save()
         return super(CreateCommunicationJob, self).form_valid(form)
 
 
     def get_success_url(self):
-        return reverse('users:profile', kwargs={'pk': self.request.user.id})
+        return reverse('mail:outbox')
 
     def get_context_data(self, **kwargs):
         context = super(CreateCommunicationJob, self).get_context_data(**kwargs)
@@ -351,14 +351,14 @@ class CreateCommunicationVenue(CreateView):
         communication.sender = self.request.user
         communication.recipient = venue.author
         title = 'Message from ' + self.request.user.first_name + ' about ' + venue.name
-        conversation = Conversation.objects.create(title=title, messenger_1=communication.sender, messenger_2=communication.recipient)
+        conversation = Conversation.objects.create(title=title, category='venue',  messenger_1=communication.sender, messenger_2=communication.recipient)
         communication.conversation_id = conversation.id
         communication.save()
         return super(CreateCommunicationVenue, self).form_valid(form)
 
 
     def get_success_url(self):
-        return reverse('users:profile', kwargs={'pk': self.request.user.id})
+        return reverse('mail:outbox')
 
     def get_context_data(self, **kwargs):
         context = super(CreateCommunicationVenue, self).get_context_data(**kwargs)

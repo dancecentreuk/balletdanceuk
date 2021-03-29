@@ -80,17 +80,19 @@
                                             {{ conversation.communications_message_1.content }}
                                         {% endif %}
                                     </h2>
-                                    {#						     <div class="badge-wrap">#}
-                                    {#                                 {% if course.age_group == 'toddlers' %}#}
-                                    {#                                     <span class="bg-warning text-white badge py-2 px-3">Toddlers</span>#}
-                                    {#                                 {% elif course.age_group == 'children' %}#}
-                                    {#                                     <span class="bg-primary text-white badge py-2 px-3">Children</span>#}
-                                    {#                                 {% elif course.age_group == 'teens' %}#}
-                                    {#                                     <span class="bg-secondary text-white badge py-2 px-3">Teen</span>#}
-                                    {#                                 {% elif course.age_group == 'adults' %}#}
-                                    {#                                     <span class="bg-danger text-white badge py-2 px-3">Adults</span>#}
-                                    {#                                 {% endif %}#}
-                                    {#						     </div>#}
+                                    						     <div class="badge-wrap">
+                                                                     {% if conversation.category == 'talent' %}
+                                                                         <span class="bg-warning text-white badge py-2 px-3">Talent</span>
+                                                                     {% elif conversation.category == 'venue' %}
+                                                                         <span class="bg-primary text-white badge py-2 px-3">Venue</span>
+                                                                     {% elif conversation.category == 'jobs' %}
+                                                                         <span class="bg-secondary text-white badge py-2 px-3">Job</span>
+                                                                     {% elif conversation.category == 'course' %}
+                                                                         <span class="bg-danger text-white badge py-2 px-3">Course</span>
+                                                                     {% elif conversation.category == 'general' %}
+                                                                         <span class="bg-danger text-white badge py-2 px-3">General</span>
+                                                                     {% endif %}
+                                    						     </div>
                                 </div>
                                 <div class="job-post-item-body d-block d-md-flex">
                                     <div class="mr-3"><span class="icon-layers"></span>

@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from datetime import datetime
+from pages.choices import mail_category_choices
 
 # Create your models here.
 from django.urls import reverse
@@ -10,6 +11,11 @@ from django.db.models import Count, Min, Max, Avg
 
 class Conversation(models.Model):
     title = models.CharField(max_length=250)
+    category = models.CharField(max_length=50,
+                                 blank=True,
+                                 default=None,
+                                 null=True,
+                                 choices=mail_category_choices)
     updated = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     messenger_1 = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='messenger_1', null=True, blank=True)
     messenger_2 = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='messenger_2', null=True, blank=True)

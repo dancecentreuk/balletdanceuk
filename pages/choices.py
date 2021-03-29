@@ -47,3 +47,12 @@ gender_choices = [
     ('M', 'Male'),
     ('F', 'Female'),
 ]
+
+
+mail_category_choices = [
+    ('talent', 'talent'),
+    ('venue', 'venue'),
+    ('jobs', 'jobs'),
+    ('course', 'course'),
+    ('general', 'general')
+]
