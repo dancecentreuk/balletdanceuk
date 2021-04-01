@@ -49,7 +49,7 @@ class AddVenueView(SuccessMessageMixin, CreateView):
     template_name = 'venues/add-venue.html'
     form_class = AddVenueForm
     success_url = '/'
-    success_message = 'Your job has been succesfully created'
+    success_message = 'Your Venue has been successfully listed'
 
     def form_valid(self, form):
         listing = form.save(commit=False)
@@ -85,7 +85,7 @@ class UpdateVenueView(SuccessMessageMixin, UpdateView):
 
 class DeleteVenueView(SuccessMessageMixin, DeleteView):
     model = Venue
-    success_url = '/'
+    success_url = '/venues/'
     template_name = 'venues/delete-listing.html'
 
 

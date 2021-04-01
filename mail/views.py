@@ -106,6 +106,8 @@ def communication_detail(request, pk):
             Conversation.objects.filter(pk=conversation).update(messenger_2_updated=new_timestamp, updated=new_timestamp, messenger_1_hidden=False)
 
         communication.save()
+        messages.add_message(request, messages.SUCCESS,
+                             'Your message has been sent to ' + str(communication.recipient.first_name))
         return redirect('mail:communication',  pk)
 
 
@@ -231,6 +233,7 @@ class CreateTalentCommunication(CreateView):
         conversation = Conversation.objects.create(title=title, category='talent', messenger_1=communication.sender, messenger_2=communication.recipient)
         communication.conversation_id = conversation.id
         communication.save()
+        messages.add_message(self.request, messages.SUCCESS, 'Your message has been sent to ' + str(communication.recipient.first_name))
         return super(CreateTalentCommunication, self).form_valid(form)
 
 

@@ -45,7 +45,7 @@ class CreateListingView(SuccessMessageMixin, CreateView):
     template_name = 'jobs/create-listing.html'
     form_class = CreateListingForm
     success_url = '/'
-    success_message = 'Your job has been succesfully created'
+    success_message = 'Your job has been successfully created'
     
     
     def form_valid(self, form):
@@ -192,7 +192,7 @@ class UpdateListingView(SuccessMessageMixin, UpdateView):
     model = Listing
     template_name = 'jobs/update-listing.html'
     form_class = UpdateListingForm
-    success_message = 'You have successfully updated your job !'
+    success_message = ' : You have successfully updated your job Listing !'
 
 
     def form_valid(self, form):
@@ -212,7 +212,6 @@ class UpdateListingView(SuccessMessageMixin, UpdateView):
 
 class DeleteListingView(SuccessMessageMixin, DeleteView):
     model = Listing
-    success_url = '/'
     template_name = 'jobs/delete-listing.html'
 
 
@@ -228,11 +227,13 @@ class DeleteListingView(SuccessMessageMixin, DeleteView):
         self.object = self.get_object()
         if self.object.author == self.request.user:
             self.object.delete()
-            messages.add_message(self.request, messages.SUCCESS, 'Your message has been deleted !!!')
-            return HttpResponseRedirect(self.success_url)
+            messages.add_message(self.request, messages.SUCCESS, 'Your job listing has been deleted !!!')
+            return HttpResponseRedirect(reverse('users:profile', kwargs={'pk': self.request.user.id}))
         else:
-            messages.add_message(self.request, messages.WARNING, 'Cheeky not your message to delete !!!')
-            return HttpResponseRedirect(self.success_url)
+            messages.add_message(self.request, messages.WARNING, ': This Message has not been deleted!')
+            return HttpResponseRedirect( reverse('jobs:single-listing', kwargs={'pk': self.object.pk, 'slug': self.object.slug}))
+
+
 
 
 class PostingView(ListView):
@@ -258,7 +259,6 @@ class CreatePostingView(SuccessMessageMixin, CreateView):
     model = Listing
     template_name = 'jobs/create-posting.html'
     form_class = CreatePostingForm
-    success_url = '/'
     success_message = 'Your job has been succesfully created'
 
     def form_valid(self, form):
@@ -276,7 +276,7 @@ class UpdatePostingView(SuccessMessageMixin, UpdateView):
     model = Listing
     template_name = 'jobs/update-posting.html'
     form_class = UpdatePostingForm
-    success_message = 'You have successfully updated your job !'
+    success_message = ': You have successfully updated your job !'
 
 
     def form_valid(self, form):
@@ -303,6 +303,32 @@ class SinglePostingView(DetailView):
         context = super(SinglePostingView, self).get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
         return context
+
+
+class DeletePostingView(SuccessMessageMixin, DeleteView):
+    model = Listing
+    template_name = 'jobs/delete-listing.html'
+
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.author != self.request.user:
+            messages.add_message(self.request, messages.WARNING, 'Cheeky not your message to update !!!')
+            return HttpResponseRedirect('/jobs/')
+        return super(DeletePostingView, self).get(request, *args, **kwargs)
+
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.author == self.request.user:
+            self.object.delete()
+            messages.add_message(self.request, messages.SUCCESS, 'Your job posting has been deleted !!!')
+            return HttpResponseRedirect(reverse('users:profile', kwargs={'pk': self.request.user.id}))
+        else:
+            messages.add_message(self.request, messages.WARNING, ': This Message has not been deleted!')
+            return HttpResponseRedirect( reverse('jobs:single-posting', kwargs={'pk': self.object.pk, 'slug': self.object.slug}))
+
+
 
 
 class CategoryPostingsView(ListView):

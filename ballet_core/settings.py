@@ -162,8 +162,27 @@ CKEDITOR_CONFIGS = {
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
+#messages
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger'
+}
+
+
+#email
+
+EMAIL_HOST = 'mail.uk2.net'
+EMAIL_HOST_USER = 'message@dancecentreuk.co.uk'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'message@dancecentreuk.co.uk'
+EMAIL_PORT = 587
+EMAIL_HOST_PASSWORD = 'passw0rd'
+
 
 try:
     from .local_settings import *
 except ImportError:
     pass
+
+
+

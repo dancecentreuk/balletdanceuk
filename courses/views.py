@@ -222,6 +222,7 @@ class CreateCourseReview(CreateView):
         form.user = self.request.user
         form.course = course
         form.save()
+        messages.add_message(self.request, messages.SUCCESS, 'Your Review has been posted')
         return super(CreateCourseReview, self).form_valid(form)
 
 
@@ -254,6 +255,7 @@ class UpdateCourseReview(UpdateView):
 
 
     def form_valid(self, form):
+        messages.add_message(self.request, messages.SUCCESS, 'Your Review has been updated')
         return super(UpdateCourseReview, self).form_valid(form)
 
 
